@@ -1,6 +1,8 @@
 # Project Title
 
-Inventory Tracking Application
+Inventory Tracking Application for Shopify Backend Developer 2022 Summer Internship Challenge
+
+Requirements and more information about the challenge can be found here [Shopify Backend Challenge](https://docs.google.com/document/d/1z9LZ_kZBUbg-O2MhZVVSqTmvDko5IJWHtuFmIu_Xg1A/edit).
 
 ## Description
 
