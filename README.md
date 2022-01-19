@@ -6,10 +6,10 @@ Inventory Tracking Application
 
 A REST API web service that accepts HTTP requests and returns responses based on the request. Used to manage products in an inventory database with API calls to complete the following:
 
-C - Create a new product entry
-R - View all products in inventory
-U - Update a product entry
-D - Delete a product entry
+* C - Create a new product entry
+* R - View all products in inventory
+* U - Update a product entry
+* D - Delete a product entry
 
 Additional feature of exporting inventory data into a csv file.
 
