@@ -163,11 +163,11 @@ Use POSTMAN to test routes.
 
 * Launch DB Browser for SQLite
 * Click on `Open Database`.
-![This is an image](views\images\open-database.jpg)
+![This is an image](/views/images/open-database.jpg)
 * Select inventory.db.
-![This is an image](views\images\select-database.jpg)
+![This is an image](/views/images/select-database.jpg)
 * To view data in a spreadsheet-like form, click on `Browse Data`. There is a dropbox menu label `Table`. Select Products and the table should appear as a spreadsheet. When you make changes to the data through the API calls just click on the refresh button to see the updated changes.
-![This is an image](views\images\browse-data.jpg)
+![This is an image](/views/images/browse-data.jpg)
 
     
  
