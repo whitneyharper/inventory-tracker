@@ -45,7 +45,7 @@ Additional feature of exporting inventory data into a csv file.
 * Clone repository git clone 
 
 ```
-git@github.com:whitneyharper/fetch-rewards-assessment.git
+git@github.com:whitneyharper/inventory-tracker.git
 ```
 
 * To install dependencies type [npm install] in the terminal 
