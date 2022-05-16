@@ -1,57 +1,35 @@
-const Sequelize = require('sequelize');
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
+const ProductSchema = new Schema({
+    name: {
+        type: String,
+        required: true,        
+        unique: true
+    },
+    price: {
+        type: Number,
+        required: true,
+        get: getPrice, 
+        set: setPrice
+    },
+    quantity: {
+        type: Number        
+    },
+    category: {
+        type: String,
+    }
+    ,
+    warehouse: { 
+        type: Schema.Types.ObjectId, 
+        ref: "Warehouse"},
+});
 
+function getPrice(num){
+    return (num/100).toFixed(2);
+}
 
-module.exports = (sequelize) => {
-    class Product extends Sequelize.Model {}
-    Product.init({
-        id: {
-            type: Sequelize.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        name: {
-            type: Sequelize.STRING,
-            allowNull: false,
-            validate: {
-                notNull: {
-                    msg: 'Please provide a product name',
-                },
-                notEmpty: {
-                    msg: 'Please provide a product name',
-                }
-            }
-        },
-        price: {
-            type: Sequelize.INTEGER,
-            allowNull: false,
-            validate: {
-                notNull: {
-                    msg: 'Please provide a price value',
-                },
-                notEmpty: {
-                    msg: 'Please provide a price value',
-                }
-                }
-        },
-        quantity: {
-            type: Sequelize.INTEGER,
-            defaultValue: 0
-        },
-        category: {
-            type: Sequelize.STRING,
-            allowNull: false,
-            validate: {
-                notNull: {
-                    msg: 'Please provide a category value',
-                },
-                notEmpty: {
-                    msg: 'Please provide a category value',
-                }
-                }
-            }
-    }, { 
-        timestamps: false,
-        sequelize });
+function setPrice(num){
+    return num*100;
+}
 
-        return Product;
-};
+module.exports = mongoose.model("Product", ProductSchema)

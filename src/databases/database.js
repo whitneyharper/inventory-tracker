@@ -1,22 +1,16 @@
-const Sequelize = require('sequelize');
-const sequelize = new Sequelize({
-        dialect: 'sqlite',
-        storage: 'inventory.db',
-        logging: false
-    },
-    );
+const mongoose = require('mongoose');
 
+const connectionString = process.env.DATABASE_URL;
 
-
-const db = {
-    sequelize,
-    Sequelize,
-    models: {}
+module.exports = function () {
+  mongoose.connect(connectionString, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,   
+  })
+    .then(() => {
+      console.log('Mongo Connection Open!');
+    })
+    .catch((err) => {
+      console.log('Mongo Connection Error!', err);
+    });
 };
-
-db.models.Product = require('../models/inventoryModel') (sequelize);
-
-
-
-
-module.exports = db;
