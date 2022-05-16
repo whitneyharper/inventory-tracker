@@ -7,10 +7,14 @@ const WarehouseSchema = new Schema({
         trim: true,
         unique: true
     },
-    address: {
-        city: {type: String, required: true},
-        state: {type: String, required: true},        
+    city: {
+        type: String, 
+        required: true
     },
+    state: {
+        type: String, 
+        required: true
+    },      
     inventory: [{ 
         type: Schema.Types.ObjectId, 
         ref: "Product"}],
