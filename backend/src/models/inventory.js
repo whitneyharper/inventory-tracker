@@ -11,10 +11,12 @@ const ProductSchema = new Schema({
         required: true,       
     },
     quantity: {
-        type: Number        
+        type: Number,
+        required: true        
     },
     category: {
         type: String,
+        required: true,
         enum: ["grocery", "health", "personal care", "beauty", "office", "sports", "pets", "household", "electronics", "baby", "toys", "patio & garden", "home improvement", "auto", "crafts", "entertainment", "apparel", "furniture"]
     }
     ,
