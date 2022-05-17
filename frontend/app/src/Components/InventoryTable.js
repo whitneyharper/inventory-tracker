@@ -1,13 +1,32 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Table, Button} from 'react-bootstrap';
+const axios = require('axios').default;
 
 
-function InventoryTable({products}) {
-    // const [data, setData] = useState(props.products.data)
-    // console.log(data)
-    // const products = data.products;
+function InventoryTable() {
     
-    console.log(products)
+    const [products, setProducts] = useState([]);
+    console.log(products);   
+
+    const url = "http://localhost:5000/inventory";
+
+    useEffect(() => {
+        const fetchData =  async() => {
+            try{
+                const response = await axios.get(url);
+                setProducts(response.data.products);                
+            } catch(error){
+                console.log('Error fetching and parsing data', error);
+            }
+        }       
+        fetchData();
+    }, [setProducts]);
+
+    const handleDelete = async(productIdToRemove) => {        
+            await axios.delete(`http://localhost:5000/inventory/${productIdToRemove}`);
+            setProducts((prev) => prev.filter(
+                product => product.id !== productIdToRemove))       
+    }
 
  return(
     <Table striped bordered hover className="mt-5">
@@ -25,13 +44,13 @@ function InventoryTable({products}) {
             {products.map((product) => {
                 return (
                     <tbody>
-                    <tr>
+                    <tr key={product._id}>
                         <td>{product.name}</td>
                         <td>${product.price.$numberDecimal}</td>
                         <td>{product.quantity}</td>
                         <td>{product.category}</td>
                         <td><Button variant="info" className="text-white">Edit</Button></td>
-                        <td><Button variant="danger">Delete</Button></td>
+                        <td><Button variant="danger" onClick={() => handleDelete(product._id)} type="submit">Delete</Button></td>
                     </tr>
                     </tbody>
                 )
