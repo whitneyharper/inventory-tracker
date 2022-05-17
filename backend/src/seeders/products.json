@@ -1,0 +1,32 @@
+[
+    {
+        "name": "12pk Pepsi cans",
+        "price": 4.59,
+        "quantity": 13,
+        "category": "grocery"
+    },
+    {
+        "name": "Xbox 360",
+        "price": 399.89,
+        "quantity": 200,
+        "category": "entertainment"
+    },
+    {
+        "name": "Funko Pop Iron Man",
+        "price": 4.69,
+        "quantity": 3,
+        "category": "toys"
+    },
+    {
+        "name": "Purple Mattress",
+        "price": 5999.79,
+        "quantity": 60,
+        "category": "household"
+    },
+    {
+        "name": "Gerber white onesies",
+        "price": 10.49,
+        "quantity": 130,
+        "category": "baby"
+    }
+]

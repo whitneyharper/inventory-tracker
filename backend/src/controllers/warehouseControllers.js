@@ -1,4 +1,4 @@
-const Warehouse = require('../models/warehouseModel');
+const Warehouse = require('../models/warehouse');
 
 
 const asyncHandler = (cb) => {

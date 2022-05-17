@@ -1,0 +1,16 @@
+[
+    {
+        "name": "Virginia One",
+        "city": "Norfolk",
+        "state": "VA",
+        "inventory": ["6282e0c07be169560596a29a", "6282e0c07be169560596a299"]
+
+    },   
+    {
+        "name": "Georgia One",
+        "city": "Atlanta",
+        "state": "GA",
+        "inventory": ["6282e0c07be169560596a298", "6282e0c07be169560596a296", "6282e0c07be169560596a297"]
+
+    }
+]

@@ -1,4 +1,4 @@
-const Product = require('../models/inventoryModel');
+const Product = require('../models/inventory');
 
 const asyncHandler = (cb) => {
     return async(req, res, next) => {

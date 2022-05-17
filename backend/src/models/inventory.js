@@ -7,16 +7,15 @@ const ProductSchema = new Schema({
         unique: true
     },
     price: {
-        type: Number,
-        required: true,
-        get: getPrice, 
-        set: setPrice
+        type: Schema.Types.Decimal128,
+        required: true,       
     },
     quantity: {
         type: Number        
     },
     category: {
         type: String,
+        enum: ["grocery", "health", "personal care", "beauty", "office", "sports", "pets", "household", "electronics", "baby", "toys", "patio & garden", "home improvement", "auto", "crafts", "entertainment", "apparel", "furniture"]
     }
     ,
     warehouse: { 
@@ -24,12 +23,6 @@ const ProductSchema = new Schema({
         ref: "Warehouse"},
 });
 
-function getPrice(num){
-    return (num/100).toFixed(2);
-}
 
-function setPrice(num){
-    return num*100;
-}
 
 module.exports = mongoose.model("Product", ProductSchema)

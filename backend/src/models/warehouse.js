@@ -13,7 +13,8 @@ const WarehouseSchema = new Schema({
     },
     state: {
         type: String, 
-        required: true
+        required: true,
+        match: [/(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AT]|W[AIVY])/, "Must use State Abbreviations"],
     },      
     inventory: [{ 
         type: Schema.Types.ObjectId, 
