@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {Table, Button} from 'react-bootstrap';
+import {Table, Button, DropdownButton} from 'react-bootstrap';
+import DropdownItem from "react-bootstrap/esm/DropdownItem";
 const axios = require('axios').default;
 
 function WarehouseTable() {
@@ -28,7 +29,7 @@ function WarehouseTable() {
                 <th>Warehouse Name</th>
                 <th>City</th>
                 <th>State</th>
-                {/* <th>Inventory</th>                */}
+                <th>Inventory</th>               
             </tr>
             </thead>
             
@@ -39,7 +40,13 @@ function WarehouseTable() {
                             <td>{warehouse.name}</td>
                             <td>{warehouse.city}</td>
                             <td>{warehouse.state}</td>
-                            {/* <td>{warehouse.inventory[0]}</td> */}
+                            <td><DropdownButton title="Products">
+                                {warehouse.inventory.map((item) => {
+                                    return (
+                                        <DropdownItem>{item.name}</DropdownItem>
+                                    )
+                                })}                                
+                            </DropdownButton></td>                           
                             <td><Button variant="info" className="text-white">Edit</Button></td>
                             <td><Button variant="danger" type="submit">Delete</Button></td>
                         </tr>

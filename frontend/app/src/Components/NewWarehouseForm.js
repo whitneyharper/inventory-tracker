@@ -1,23 +1,45 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Container, Form, Row, Col, Button} from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import Select from 'react-select';
 const axios = require('axios').default;
 
+
 let schema = yup.object().shape({
-    name: yup.string().required("Product Name is required"),
-    price: yup.number().required("Price is required"),
-    quantity: yup.number().required("Quantity is required"),
-    category: yup.string().required("Category selection is required")
+    name: yup.string().required("Warehouse Name is required"),
+    city: yup.string().required("City is required"),
+    state: yup.string().required("State is required").matches(/(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AT]|W[AIVY])/, "Please use state abbreviations"),
+    inventory: yup.array()
 })
 
-function ProductForm() {
+
+function WarehouseForm() {
+
+    const [products, setProducts] = useState([]);
+   
+    const url = "http://localhost:5000/inventory";
+
+    
+
+    useEffect(() => {
+        const fetchData =  async() => {
+            try{
+                const response = await axios.get(url);
+                setProducts(response.data.products);                
+            } catch(error){
+                console.log('Error fetching and parsing data', error);
+            }
+        }       
+        fetchData();
+    }, [setProducts]);
+
     return(
         <>
             <Container className="mb-5 mt-5">
                 <Row>
                     <Col>
-                        <h1>New Product</h1>
+                        <h1>New Warehouse</h1>
                     </Col>
                 </Row>
             </Container>    
@@ -25,9 +47,9 @@ function ProductForm() {
             <Formik
                 initialValues={{
                     name: "",
-                    price: "",
-                    quantity: "",
-                    category: ""
+                    city: "",
+                    state: "",
+                    inventory: []
                 }}
                 validationSchema={schema}
                 onSubmit={async(values, actions) => {
@@ -36,7 +58,7 @@ function ProductForm() {
                     //POST
                     try {
                         await axios.post(
-                            "http://localhost:5000/inventory", 
+                            "http://localhost:5000/warehouse", 
                             values,
                             {
                                 headers: {
@@ -57,18 +79,19 @@ function ProductForm() {
                     handleSubmit,
                     handleChange,
                     values,
-                    errors
+                    errors,
+                    setFieldValue
                 }) => (
                     <Container>
                             <Form noValidate onSubmit={handleSubmit}>
+                            {console.log(values)}
                                 <Form.Group as={Row} className="mb-3 justify-content-center">
                                     <Form.Label column sm={2} className="redAsterisks">
                                     Name
                                     </Form.Label>
                                     <Col sm={5}>
-                                    <Form.Control 
-                                        type="text"
-                                        placeholder="Product Name"
+                                    <Form.Control                                         
+                                        placeholder="Warehouse Name"
                                         name="name"  
                                         value={values.name}
                                         onChange={handleChange}
@@ -80,72 +103,62 @@ function ProductForm() {
 
                                 <Form.Group as={Row} className="mb-3 justify-content-center">
                                     <Form.Label column sm={2} className="redAsterisks">
-                                    Price
+                                    City
                                     </Form.Label>
                                     <Col sm={5}>
                                     <Form.Control 
-                                        type="number"
-                                        placeholder="Enter Price" 
-                                        name="price"  
-                                        value={values.price}
+                                        type="text"
+                                        placeholder="Enter City" 
+                                        name="city"  
+                                        value={values.city}
                                         onChange={handleChange}
-                                        isInvalid={!!errors.price}
+                                        isInvalid={!!errors.city}
                                      />
-                                    <Form.Control.Feedback  type="invalid">{errors.price}</Form.Control.Feedback>
+                                    <Form.Control.Feedback  type="invalid">{errors.city}</Form.Control.Feedback>
                                     </Col>
                                 </Form.Group>
 
                                 <Form.Group as={Row} className="mb-3 justify-content-center">
                                     <Form.Label column sm={2} className="redAsterisks">
-                                    Quantity
+                                    State
                                     </Form.Label>
                                     <Col sm={5}>
                                     <Form.Control 
-                                        type="number" 
-                                        placeholder="Enter Quantity" 
-                                        name="quantity"  
-                                        value={values.quantity}
+                                        type="text" 
+                                        placeholder="Enter State" 
+                                        name="state"  
+                                        value={values.state}
                                         onChange={handleChange}
-                                        isInvalid={!!errors.quantity}
+                                        isInvalid={!!errors.state}
                                         />
-                                    <Form.Control.Feedback  type="invalid">{errors.quantity}</Form.Control.Feedback>
+                                    <Form.Control.Feedback  type="invalid">{errors.state}</Form.Control.Feedback>
                                     </Col>
                                 </Form.Group>
 
                                 <Form.Group as={Row} className="mb-3 justify-content-center">
-                                    <Form.Label column sm={2} className="redAsterisks">
-                                    Category
+                                    <Form.Label column sm={2}>
+                                        Inventory
                                     </Form.Label>
                                     <Col sm={5}>
-                                    <Form.Select                                         
-                                        name="category"  
-                                        value={values.category}
-                                        onChange={handleChange}
-                                        isInvalid={!!errors.category}
-                                        >
-                                        <option>Choose...</option>
-                                        <option>grocery</option>
-                                        <option>health</option>
-                                        <option>personal care</option>
-                                        <option>beauty</option>
-                                        <option>office</option>
-                                        <option>sports</option>
-                                        <option>pets</option>
-                                        <option>household</option>
-                                        <option>electronics</option>
-                                        <option>baby</option>
-                                        <option>toys</option>
-                                        <option>patio & garden</option>
-                                        <option>home improvement</option>
-                                        <option>auto</option>
-                                        <option>crafts</option>
-                                        <option>entertainment</option>
-                                        <option>apparel</option>
-                                        <option>furniture</option>
-                                    </Form.Select>
-                                    <Form.Control.Feedback  type="invalid">{errors.category}</Form.Control.Feedback>
-                                    </Col>
+                                        <Select 
+                                            options={products.map((product) => {
+                                                        return {
+                                                            value: product._id,
+                                                            label: product.name
+                                                        }
+                                                    })}
+                                            isMulti
+                                            // value={values.inventory}
+                                            name="inventory"
+                                            onChange={(option) => {
+                                                setFieldValue("inventory", option.map((o) => {
+                                                    return o.value;
+                                                }))
+                                            }}
+                                        />
+                                    </Col>                                    
                                 </Form.Group>
+                
                                 <Row className='mt-5'>
                                     <Col>
                                         <Button type="submit">Submit</Button>
@@ -159,4 +172,4 @@ function ProductForm() {
     )
 }
 
-export default ProductForm;
+export default WarehouseForm;

@@ -3,14 +3,14 @@
         "name": "Virginia One",
         "city": "Norfolk",
         "state": "VA",
-        "inventory": ["6282e0c07be169560596a29a", "6282e0c07be169560596a299"]
+        "inventory": ["62840e27b3e9c7efc0c4391a", "62840e27b3e9c7efc0c43919"]
 
     },   
     {
         "name": "Georgia One",
         "city": "Atlanta",
         "state": "GA",
-        "inventory": ["6282e0c07be169560596a298", "6282e0c07be169560596a296", "6282e0c07be169560596a297"]
+        "inventory": ["62840e27b3e9c7efc0c4391c", "62840e27b3e9c7efc0c4391d", "62840e27b3e9c7efc0c4391b"]
 
     }
 ]
