@@ -2,7 +2,7 @@ import React from 'react';
 import WarehouseNavBar from '../Components/WarehouseNavBar';
 import NewWarehouseForm from '../Components/NewWarehouseForm';
 
-function WarehousePage() {
+function NewWarehousePage() {
     return(
         <>
             <WarehouseNavBar />
@@ -12,4 +12,4 @@ function WarehousePage() {
     )
 }
 
-export default WarehousePage;
+export default NewWarehousePage;

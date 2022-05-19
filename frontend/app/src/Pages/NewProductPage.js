@@ -2,7 +2,7 @@ import React from "react";
 import NavBar from "../Components/NavBar";
 import ProductForm from "../Components/NewProductForm";
 
-function ProductPage() {
+function NewProductPage() {
     return(
         <>
             <NavBar />
@@ -11,4 +11,4 @@ function ProductPage() {
     )
 }
 
-export default ProductPage;
+export default NewProductPage;

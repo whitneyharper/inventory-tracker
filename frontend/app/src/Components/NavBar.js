@@ -1,5 +1,6 @@
 import React from 'react';
 import {Navbar, Container, Nav} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function NavBar() {
     
@@ -7,13 +8,10 @@ function NavBar() {
         <>
             <Navbar bg="light" expand="lg">
                 <Container>
-                    <Navbar.Brand>Inventory Tracking</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
+                    <Navbar.Brand>Inventory Tracking</Navbar.Brand>                   
                     <Nav className="mx-auto">
-                        <Nav.Link href="#home">Warehouse</Nav.Link>                                        
-                    </Nav>
-                    </Navbar.Collapse>
+                        <Link to='/warehouse'>Warehouse</Link>                                        
+                    </Nav>                 
                 </Container>
             </Navbar>                
         </>
