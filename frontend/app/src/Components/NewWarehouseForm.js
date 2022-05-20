@@ -3,6 +3,7 @@ import {Container, Form, Row, Col, Button} from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import Select from 'react-select';
+import NavBar from '../Components/NavBar';
 const axios = require('axios').default;
 
 
@@ -36,6 +37,7 @@ function WarehouseForm() {
 
     return(
         <>
+            <NavBar />
             <Container className="mb-5 mt-5">
                 <Row>
                     <Col>

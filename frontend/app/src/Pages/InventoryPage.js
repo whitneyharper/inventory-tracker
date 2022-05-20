@@ -9,7 +9,7 @@ function InventoryPage() {
 
     const history = useHistory();
     const handleClick = () => {
-        history.push('/inventory/create')
+        history.push('/inventory/create');
     }
 
     return(
@@ -19,8 +19,7 @@ function InventoryPage() {
                 <Row>
                     <Col>
                         <ButtonGroup className="mt-5">
-                            <Button variant="success" className="me-4" type="button" to='/inventory/create' onClick={handleClick}>Create New Product</Button>
-                            <Button variant="warning">View Inventory</Button>            
+                            <Button variant="success" className="me-4" type="button"  onClick={handleClick}>Create New Product</Button>                                      
                         </ButtonGroup>
                     </Col>
                 </Row>

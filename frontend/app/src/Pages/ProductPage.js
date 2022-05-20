@@ -1,44 +1,74 @@
-import React from 'react';
+import React, {useState, useEffect} from "react";
 import {Container, Form, Row, Col, Button} from 'react-bootstrap';
 import { Formik } from 'formik';
-import * as yup from 'yup';
-import WarehouseNavBar from '../Components/WarehouseNavBar';
+import { useParams, useHistory } from 'react-router-dom';
 const axios = require('axios').default;
 
-let schema = yup.object().shape({
-    name: yup.string().required("Product Name is required"),
-    price: yup.number().required("Price is required"),
-    quantity: yup.number().required("Quantity is required"),
-    category: yup.string().required("Category selection is required")
-})
 
-function ProductForm() {
+
+function Product() {
+    const history = useHistory();
+    let {id} = useParams();
+    const [products, setProducts] = useState([]);  
+    
+    console.log(products)
+    const url = "http://localhost:5000/inventory";
+    
+    useEffect(() => {
+        const fetchData =  async() => {
+            try{
+                const response = await axios.get(url);
+                setProducts(response.data.products);                
+            } catch(error){
+                console.log('Error fetching and parsing data', error);
+            }
+        }  
+
+      fetchData();
+    }, [setProducts]);
+
+    const productId = products.filter((product) => {
+        return product._id === id;
+    })
+    
+    // const handleDelete = async(productId) => {   
+    //     console.log(productId[0]._id);   
+    //     if (productId[0]._id === id) {
+    //         await axios.delete(`http://localhost:5000/inventory/:${id}`);
+    //         history.push('/') ;    
+    //     }  else {
+    //         console.log("not working");
+    //     }     
+    // }
+
+
     return(
         <>
-            <WarehouseNavBar />
+        {(productId.length > 0) ? 
+        <>
             <Container className="mb-5 mt-5">
                 <Row>
                     <Col>
-                        <h1>New Product</h1>
+                        <h1>{productId[0].name}</h1>
                     </Col>
                 </Row>
             </Container>    
 
             <Formik
                 initialValues={{
-                    name: "",
-                    price: "",
-                    quantity: "",
-                    category: ""
+                    name: productId[0].name,
+                    price: productId[0].price.$numberDecimal,
+                    quantity: productId[0].quantity,
+                    category: productId[0].category
                 }}
-                validationSchema={schema}
+                // validationSchema={schema}
                 onSubmit={async(values, actions) => {
                     actions.setSubmitting(true);
 
                     //POST
                     try {
-                        await axios.post(
-                            "http://localhost:5000/inventory", 
+                        await axios.put(
+                            `http://localhost:5000/inventory/:${id}`, 
                             values,
                             {
                                 headers: {
@@ -48,8 +78,9 @@ function ProductForm() {
                             )
                     } catch(err) {
                         } finally {
-                            actions.resetForm();
+                            // actions.resetForm();
                             actions.setSubmitting(false);
+                            history.push('/') ;
                         }
                    
 
@@ -63,6 +94,7 @@ function ProductForm() {
                 }) => (
                     <Container>
                             <Form noValidate onSubmit={handleSubmit}>
+                            {console.log(values)}
                                 <Form.Group as={Row} className="mb-3 justify-content-center">
                                     <Form.Label column sm={2} className="redAsterisks">
                                     Name
@@ -72,7 +104,7 @@ function ProductForm() {
                                         type="text"
                                         placeholder="Product Name"
                                         name="name"  
-                                        value={values.name}
+                                        value={values.name}                                        
                                         onChange={handleChange}
                                         isInvalid={!!errors.name}
                                         />   
@@ -152,13 +184,18 @@ function ProductForm() {
                                     <Col>
                                         <Button type="submit">Submit</Button>
                                     </Col>
+                                    {/* <Col>
+                                        <Button variant="danger" onClick={() => handleDelete(productId)} type="submit" >Delete</Button>
+                                    </Col> */}
                                 </Row>
                         </Form>   
                     </Container>
                 )}
-            </Formik>            
-        </>        
+            </Formik> 
+            </>           
+         : (null)  }  
+        </>              
     )
 }
 
-export default ProductForm;
+export default Product;

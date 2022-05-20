@@ -1,28 +1,32 @@
 import React from 'react';
-import './App.css';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import WarehousesPage from './Pages/WarehousesPage';
 import InventoryPage from './Pages/InventoryPage';
-import NewProductPage from './Pages/NewProductPage';
+import NewProductPage from './Pages/NewProductPage'
 import NewWarehousePage from './Pages/NewWarehousePage';
+import Product from './Pages/ProductPage';
+import './App.css';
 
 function App() {
   return (
     <div className="App">  
       <Router>
-        <Switch>
-          <Route exact path='/'>
+        <Switch>  
+        <Route exact path='/'>
             <InventoryPage />
-          </Route>
+          </Route>  
           <Route exact path='/inventory/create'>
             <NewProductPage />
           </Route>
-          <Route exact path='/warehouse'>
+        <Route exact path='/inventory/:id'>
+            <Product />
+          </Route>      
+          <Route  exact path='/warehouse'>
             <WarehousesPage />
-          </Route>
-          <Route exact path='/warehouse/create'>
+          </Route>  
+          <Route  exact path='/warehouse/create'>
             <NewWarehousePage />
-          </Route>
+          </Route> 
         </Switch>        
       </Router> 
     </div>
