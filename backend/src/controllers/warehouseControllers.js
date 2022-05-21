@@ -44,7 +44,7 @@ exports.updateWarehouse = asyncHandler(async(req, res) => {
 exports.deleteWarehouse = asyncHandler(async(req, res) => {
     let query = req.params._id;
 
-    const deletedWarehouse = await Warehouse.findOneAndDelete(query);
+    const deletedWarehouse = await Warehouse.findByIdAndDelete(query);
 
     if (deletedWarehouse) {
         return res.status(200).json({message: `Warehouse deleted.`})

@@ -34,7 +34,7 @@ exports.viewInventory = asyncHandler(async(req, res) => {
 exports.updateProduct = asyncHandler(async(req, res) => {
     let query = req.params._id;
 
-    const updatedProduct = await Product.findOneAndUpdate(query, req.body);   
+    const updatedProduct = await Product.findByIdAndUpdate(query, req.body);   
 
     if (!updatedProduct) {
         return res.status(404).json({message: `Product not found`});
@@ -49,7 +49,7 @@ exports.updateProduct = asyncHandler(async(req, res) => {
 exports.deleteProduct = asyncHandler(async(req, res) => {
     let query = req.params._id;
 
-    const deletedProduct = await Product.findOneAndDelete(query);
+    const deletedProduct = await Product.findByIdAndDelete(query);
 
     if (deletedProduct) {
         return res.status(200).json({message: `Product deleted.`})

@@ -1,17 +1,24 @@
 import React, {useState, useEffect} from "react";
 import {Container, Form, Row, Col, Button} from 'react-bootstrap';
 import { Formik } from 'formik';
+import * as yup from 'yup';
 import { useParams, useHistory } from 'react-router-dom';
+import WarehouseNavBar from '../Components/WarehouseNavBar';
 const axios = require('axios').default;
 
-
+let schema = yup.object().shape({
+    name: yup.string().required("Product Name is required"),
+    price: yup.number().required("Price is required"),
+    quantity: yup.number().required("Quantity is required"),
+    category: yup.string().required("Category selection is required")
+})
 
 function Product() {
     const history = useHistory();
     let {id} = useParams();
+   
     const [products, setProducts] = useState([]);  
     
-    console.log(products)
     const url = "http://localhost:5000/inventory";
     
     useEffect(() => {
@@ -27,23 +34,25 @@ function Product() {
       fetchData();
     }, [setProducts]);
 
+    //variable that hold the id in products state that matches the id of useParams
     const productId = products.filter((product) => {
         return product._id === id;
-    })
-    
-    // const handleDelete = async(productId) => {   
-    //     console.log(productId[0]._id);   
-    //     if (productId[0]._id === id) {
-    //         await axios.delete(`http://localhost:5000/inventory/:${id}`);
-    //         history.push('/') ;    
-    //     }  else {
-    //         console.log("not working");
-    //     }     
-    // }
+    });
+  
+    const handleDelete = async() => {     
+        try {
+            await axios.delete(`http://localhost:5000/inventory/${id}`);           
+        } catch(err) {
+            console.log('not working', err);
+        } finally {
+              history.push('/') ; 
+        }            
+    }
 
 
     return(
         <>
+            <WarehouseNavBar />
         {(productId.length > 0) ? 
         <>
             <Container className="mb-5 mt-5">
@@ -61,14 +70,14 @@ function Product() {
                     quantity: productId[0].quantity,
                     category: productId[0].category
                 }}
-                // validationSchema={schema}
+                validationSchema={schema}
                 onSubmit={async(values, actions) => {
                     actions.setSubmitting(true);
 
                     //POST
                     try {
                         await axios.put(
-                            `http://localhost:5000/inventory/:${id}`, 
+                            `http://localhost:5000/inventory/${id}`, 
                             values,
                             {
                                 headers: {
@@ -78,12 +87,9 @@ function Product() {
                             )
                     } catch(err) {
                         } finally {
-                            // actions.resetForm();
                             actions.setSubmitting(false);
                             history.push('/') ;
                         }
-                   
-
                     } }
             >
                 {({
@@ -184,9 +190,9 @@ function Product() {
                                     <Col>
                                         <Button type="submit">Submit</Button>
                                     </Col>
-                                    {/* <Col>
-                                        <Button variant="danger" onClick={() => handleDelete(productId)} type="submit" >Delete</Button>
-                                    </Col> */}
+                                    <Col>
+                                        <Button variant="danger" onClick={handleDelete} type="button" >Delete</Button>
+                                    </Col>
                                 </Row>
                         </Form>   
                     </Container>
