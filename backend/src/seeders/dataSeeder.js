@@ -3,7 +3,6 @@ const fs = require("fs");
 const path = require("path");
 
 const dbSetup = require("../databases/database");
-
 dbSetup();
 
 //Load Models

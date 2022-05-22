@@ -1,6 +1,8 @@
 require("dotenv").config();
 const express = require('express');
 const app = express();
+const mongoose = require('mongoose');
+const connectionString = process.env.DATABASE_URL;
 const PORT = 5000;
 const cors = require("cors");
 
@@ -12,12 +14,6 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-//==================================================
-// DATABASE
-//==================================================
-const dbSetup = require("./src/databases/database");
-dbSetup();
 
 //==================================================
 // Routes
@@ -41,6 +37,23 @@ app.use((err, req, res, next) => {
   res.status(status).json(message);
 });
 
-app.listen(PORT, () => {
-    console.log(`The server is up and running. Listening on ${PORT}.`);
-});
+//==================================================
+// DATABASE
+//==================================================
+mongoose.connect(connectionString, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,   
+})
+    .then(() => {
+      console.log('Mongo Connection Open!');
+    })
+    .then(() => {
+      app.listen(PORT, () => {
+        console.log(`The server is up and running. Listening on ${PORT}.`);
+      });
+    })
+    .catch((err) => {
+      console.log('Mongo Connection Error!', err);
+    });
+
+
