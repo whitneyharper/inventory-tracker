@@ -4,7 +4,8 @@ import WarehousesPage from './Pages/WarehousesPage';
 import InventoryPage from './Pages/InventoryPage';
 import NewProductPage from './Pages/NewProductPage'
 import NewWarehousePage from './Pages/NewWarehousePage';
-import Product from './Pages/ProductPage';
+import ProductPage from './Pages/ProductPage';
+import WarehousePage from './Pages/WarehousePage';
 import './App.css';
 
 function App() {
@@ -19,13 +20,16 @@ function App() {
             <NewProductPage />
           </Route>
         <Route exact path='/inventory/:id'>
-            <Product />
+            <ProductPage />
           </Route>      
           <Route  exact path='/warehouse'>
             <WarehousesPage />
           </Route>  
           <Route  exact path='/warehouse/create'>
             <NewWarehousePage />
+          </Route> 
+          <Route  exact path='/warehouse/:id'>
+            <WarehousePage />
           </Route> 
         </Switch>        
       </Router> 

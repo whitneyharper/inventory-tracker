@@ -18,8 +18,7 @@ function WarehousesPage(){
                 <Row>
                     <Col>
                         <ButtonGroup className="mt-5">
-                            <Button variant="success" className="me-4" type="button" to='/warehouse/create' onClick={handleClick}>Create New Warehouse</Button>
-                            <Button variant="warning">View Warehouses</Button>            
+                            <Button variant="success" className="me-4" type="button" to='/warehouse/create' onClick={handleClick}>Create New Warehouse</Button>           
                         </ButtonGroup>
                     </Col>
                 </Row>

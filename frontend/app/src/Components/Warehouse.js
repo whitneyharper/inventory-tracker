@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState, useEffect} from "react";
 import {Container, Form, Row, Col, Button} from 'react-bootstrap';
+import Select from 'react-select';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import Select from 'react-select';
-import { useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 const axios = require('axios').default;
-
 
 let schema = yup.object().shape({
     name: yup.string().required("Warehouse Name is required"),
@@ -14,17 +13,47 @@ let schema = yup.object().shape({
     inventory: yup.array()
 })
 
-
-function WarehouseForm() {
-
+function Warehouse() {
+    
     const history = useHistory();
+    let {id} = useParams();
 
-    const [products, setProducts] = useState([]);
-   
-    const url = "http://localhost:5000/inventory";
+    const [products, setProducts] = useState([]); 
+    const [warehouses, setWarehouses] = useState([]);
+
+    //variable that hold the id in products state that matches the id of useParams
+    const warehouseId = warehouses.filter((warehouse) => {
+        return warehouse._id === id;
+    });
+
+    const inventoryId = warehouseId.length !== 0 ? warehouseId[0].inventory.map((i) => {
+        return {
+            value: i._id,
+            label: i.name            
+        }
+    }) : null;
+
+    console.log(inventoryId);
 
     
 
+    let productIds = [];
+
+    (async () => {
+        if (inventoryId.length !== 0) {
+            inventoryId.filter(i => {
+                if (i.value.length !== 0) {
+                    productIds.push(i.value);
+                }
+                return i.value
+            }
+        )}
+    })()
+
+    console.log(productIds);
+
+    const url = "http://localhost:5000/inventory";
+    
     useEffect(() => {
         const fetchData =  async() => {
             try{
@@ -33,35 +62,62 @@ function WarehouseForm() {
             } catch(error){
                 console.log('Error fetching and parsing data', error);
             }
+        }  
+
+      fetchData();
+    }, []);
+
+   
+    useEffect(() => {
+        const fetchData =  async() => {
+            try{
+                const response = await axios.get("http://localhost:5000/warehouse");
+                setWarehouses(response.data.warehouses);               
+            } catch(error){
+                console.log('Error fetching and parsing data', error);
+            }
         }       
         fetchData();
-    }, [setProducts]);
+    }, []);
+
+    const handleDelete = async() => {     
+        try {
+            await axios.delete(`http://localhost:5000/warehouse/${id}`);           
+        } catch(err) {
+            console.log('not working', err);
+        } finally {
+              history.push('/warehouse') ; 
+        }            
+    }
 
     return(
+        <>
+            {(warehouseId.length > 0) ? 
         <>
             <Container className="mb-5 mt-5">
                 <Row>
                     <Col>
-                        <h1>New Warehouse</h1>
+                        <h1>{warehouseId[0].name}</h1>
                     </Col>
                 </Row>
             </Container>    
-
             <Formik
+                enableReinitialize={true}
                 initialValues={{
-                    name: "",
-                    city: "",
-                    state: "",
-                    inventory: []
+                    name: warehouseId[0].name,
+                    city: warehouseId[0].city,
+                    state: warehouseId[0].state,
+                    inventory: [...productIds] ? [...productIds] : []
                 }}
+                
                 validationSchema={schema}
                 onSubmit={async(values, actions) => {
                     actions.setSubmitting(true);
 
                     //POST
                     try {
-                        await axios.post(
-                            "http://localhost:5000/warehouse", 
+                        await axios.put(
+                            `http://localhost:5000/warehouse/${id}`, 
                             values,
                             {
                                 headers: {
@@ -70,9 +126,9 @@ function WarehouseForm() {
                             }
                             )
                     } catch(err) {
-                        } finally {                            
+                        } finally {
                             actions.setSubmitting(false);
-                            history.push('/warehouse')
+                            history.push('/warehouse');
                         }
                    
 
@@ -149,30 +205,41 @@ function WarehouseForm() {
                                                             value: product._id,
                                                             label: product.name
                                                         }
-                                                    })}
+                                                    })}                                            
                                             isMulti
                                             // value={values.inventory}
+                                            // value={values.inventory}
+                                            defaultValue={warehouseId[0].inventory.map((i) => {
+                                                return {                                            //      
+                                                    label: i.name
+                                                }
+                                            })}                                            
                                             name="inventory"
                                             onChange={(option) => {
                                                 setFieldValue("inventory", option.map((o) => {
                                                     return o.value;
                                                 }))
-                                            }}
+                                            }}                
                                         />
                                     </Col>                                    
                                 </Form.Group>
                 
                                 <Row className='mt-5'>
-                                    <Col>
+                                    <Col xs={6}>
                                         <Button type="submit">Submit</Button>
+                                    </Col>
+                                    <Col xs={6}>
+                                        <Button variant="danger" onClick={handleDelete} type="button" >Delete</Button>
                                     </Col>
                                 </Row>
                         </Form>   
                     </Container>
                 )}
-            </Formik>            
-        </>        
+            </Formik>
+            </>           
+         : (null)  }
+        </>
     )
 }
 
-export default WarehouseForm;
+export default Warehouse;

@@ -1,12 +1,12 @@
 [
     {
-        "name": "12pk Pepsi cans",
-        "price": 4.59,
+        "name": "Pepsi Cola Soda Pop, 12 oz Cans, 24 Pack",
+        "price": 9.48,
         "quantity": 13,
         "category": "grocery"
     },
     {
-        "name": "Xbox 360",
+        "name": "Microsoft Xbox 360",
         "price": 399.89,
         "quantity": 200,
         "category": "entertainment"
@@ -18,15 +18,21 @@
         "category": "toys"
     },
     {
-        "name": "Purple Mattress",
-        "price": 5999.79,
+        "name": "Mainstays 6in Innerspring Coil Mattress, Twin",
+        "price": 109.00,
         "quantity": 60,
         "category": "household"
     },
     {
-        "name": "Gerber white onesies",
-        "price": 10.49,
+        "name": "Bright Starts Bright Starts Fanciful Fantasy Unicorn Vibrating Baby Bouncer",
+        "price": 24.99,
         "quantity": 130,
         "category": "baby"
+    },
+    {
+        "name": "Champion Women Cropped T-Shirt",
+        "price": 7.50,
+        "quantity": 13,
+        "category": "apparel"
     }
 ]

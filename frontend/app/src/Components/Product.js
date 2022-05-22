@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useState, useEffect} from "react";
 import {Container, Form, Row, Col, Button} from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 const axios = require('axios').default;
 
 let schema = yup.object().shape({
@@ -12,26 +12,61 @@ let schema = yup.object().shape({
     category: yup.string().required("Category selection is required")
 })
 
-function ProductForm() {
-
+function Product() {
     const history = useHistory();
+    let {id} = useParams();
+   
+    const [products, setProducts] = useState([]);  
+    
+    const url = "http://localhost:5000/inventory";
+    
+    useEffect(() => {
+        const fetchData =  async() => {
+            try{
+                const response = await axios.get(url);
+                setProducts(response.data.products);                
+            } catch(error){
+                console.log('Error fetching and parsing data', error);
+            }
+        }  
+
+      fetchData();
+    }, [setProducts]);
+
+    //variable that hold the id in products state that matches the id of useParams
+    const productId = products.filter((product) => {
+        return product._id === id;
+    });
+  
+    const handleDelete = async() => {     
+        try {
+            await axios.delete(`http://localhost:5000/inventory/${id}`);           
+        } catch(err) {
+            console.log('not working', err);
+        } finally {
+              history.push('/') ; 
+        }            
+    }
+
 
     return(
+        <>
+        {(productId.length > 0) ? 
         <>
             <Container className="mb-5 mt-5">
                 <Row>
                     <Col>
-                        <h1>New Product</h1>
+                        <h1>{productId[0].name}</h1>
                     </Col>
                 </Row>
             </Container>    
 
             <Formik
                 initialValues={{
-                    name: "",
-                    price: "",
-                    quantity: "",
-                    category: ""
+                    name: productId[0].name,
+                    price: productId[0].price.$numberDecimal,
+                    quantity: productId[0].quantity,
+                    category: productId[0].category
                 }}
                 validationSchema={schema}
                 onSubmit={async(values, actions) => {
@@ -39,8 +74,8 @@ function ProductForm() {
 
                     //POST
                     try {
-                        await axios.post(
-                            "http://localhost:5000/inventory", 
+                        await axios.put(
+                            `http://localhost:5000/inventory/${id}`, 
                             values,
                             {
                                 headers: {
@@ -50,12 +85,9 @@ function ProductForm() {
                             )
                     } catch(err) {
                         } finally {
-                            actions.resetForm();
                             actions.setSubmitting(false);
                             history.push('/') ;
                         }
-                   
-
                     } }
             >
                 {({
@@ -66,6 +98,7 @@ function ProductForm() {
                 }) => (
                     <Container>
                             <Form noValidate onSubmit={handleSubmit}>
+                            {console.log(values)}
                                 <Form.Group as={Row} className="mb-3 justify-content-center">
                                     <Form.Label column sm={2} className="redAsterisks">
                                     Name
@@ -75,7 +108,7 @@ function ProductForm() {
                                         type="text"
                                         placeholder="Product Name"
                                         name="name"  
-                                        value={values.name}
+                                        value={values.name}                                        
                                         onChange={handleChange}
                                         isInvalid={!!errors.name}
                                         />   
@@ -152,16 +185,20 @@ function ProductForm() {
                                     </Col>
                                 </Form.Group>
                                 <Row className='mt-5'>
-                                    <Col>
+                                    <Col xs={6}>
                                         <Button type="submit">Submit</Button>
+                                    </Col>
+                                    <Col xs={6}>
+                                        <Button variant="danger" onClick={handleDelete} type="button" >Delete</Button>
                                     </Col>
                                 </Row>
                         </Form>   
                     </Container>
                 )}
-            </Formik>            
-        </>        
+            </Formik> 
+            </>           
+         : (null)  }  
+        </>              
     )
 }
-
-export default ProductForm;
+export default Product;

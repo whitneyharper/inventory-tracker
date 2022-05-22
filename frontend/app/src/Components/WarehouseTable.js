@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react";
-import {Table, Button, DropdownButton} from 'react-bootstrap';
+import {Table,DropdownButton} from 'react-bootstrap';
 import DropdownItem from "react-bootstrap/esm/DropdownItem";
+import { Link } from "react-router-dom";
 const axios = require('axios').default;
 
 function WarehouseTable() {
 
     const [warehouses, setWarehouses] = useState([]);
-    console.log(warehouses);  
-
+    
     const url = "http://localhost:5000/warehouse";
 
     useEffect(() => {
@@ -47,8 +47,7 @@ function WarehouseTable() {
                                     )
                                 })}                                
                             </DropdownButton></td>                           
-                            <td><Button variant="info" className="text-white">Edit</Button></td>
-                            <td><Button variant="danger" type="submit">Delete</Button></td>
+                            <td><Link to={'/warehouse/' + warehouse._id}>View</Link></td>
                         </tr>
                         </tbody>
                     )

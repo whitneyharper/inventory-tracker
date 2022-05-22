@@ -26,15 +26,14 @@ exports.viewWarehouse = asyncHandler(async(req, res) => {
 
 //UPDATE WAREHOUSE BY ID
 exports.updateWarehouse = asyncHandler(async(req, res) => {
-    // let query = req.params._id;
-    const warehouse = await Warehouse.findOne({ _id: req.params._id })
+    let query = req.params._id;
+    // const warehouse = await Warehouse.findOne({ _id: req.params._id })
 
-    // const updatedWarehouse = await Warehouse.findOneAndUpdate(query, req.body);   
+    const updatedWarehouse = await Warehouse.findByIdAndUpdate(query, req.body);   
 
-    if (!warehouse) {
+    if (!updatedWarehouse) {
         return res.status(404).json({message: `Warehouse not found`});
     } else {
-        const updatedWarehouse = await Warehouse.updateOne(req.body);
         return res.status(200).json({message: `Warehouse is updated.`});
     }
 }
