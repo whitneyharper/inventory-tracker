@@ -30,6 +30,7 @@ Additional feature basic CRUD functionality for warehouses, along with assigning
 * cors
 * dotenv
 * mongoose
+* nodemon
 * axios
 * bootstrap
 * formik
@@ -68,7 +69,7 @@ npm install
 * To start [npm run dev] in the terminal. This will run backend (node.js) on port 5000 and frontend (react.js) on port 3000.
 
 ```
-npm start
+npm run dev
 ```
 
 ## API Calls
