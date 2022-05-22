@@ -54,15 +54,18 @@ Additional feature basic CRUD functionality for warehouses, along with assigning
 https://github.com/whitneyharper/inventory-tracker.git
 ```
 
-* To install dependencies type [npm install] in the terminal 
+* To install dependencies type [npm i or npm install] in the terminal 
 
+```
+npm i 
+```
 ```
 npm install
 ```
 
 ### Executing program
 
-* To start server type [npm start] in the terminal.
+* To start [npm run dev] in the terminal. This will run backend (node.js) on port 5000 and frontend (react.js) on port 3000.
 
 ```
 npm start

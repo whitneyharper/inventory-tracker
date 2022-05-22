@@ -1,0 +1,27 @@
+{
+  "name": "shopify_backend_challenge",
+  "version": "1.0.0",
+  "description": "inventory tracking application",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "concurrently": "^7.2.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "cd frontend && npm i && npm start",
+    "server": "cd backend && npm i && node index.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\" "
+  },
+  
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whitneyharper/inventory-tracker.git"
+  },
+  "author": "Whitney Harper",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/whitneyharper/inventory-tracker/issues"
+  },
+  "homepage": "https://github.com/whitneyharper/inventory-tracker#readme"
+}
