@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useCallback} from "react";
 import {Table } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 const axios = require('axios').default;
@@ -11,18 +11,18 @@ function InventoryTable() {
 
     const url = "http://localhost:5000/inventory";
 
+    const fetchData = useCallback(async () => {
+        const response = await axios.get(url);
+        setProducts(response.data.products);             
+    }, [])
+    
     useEffect(() => {
-        const fetchData =  async() => {
-            const response = await axios.get(url);
-            setProducts(response.data.products); 
-        }
-
             try{
-                fetchData();
+                fetchData()
             } catch(error) {
                 console.log('Error fetching and parsing data', error);
             }
-    }, []);
+    }, [fetchData]);
 
  return(
     <Table striped bordered hover className="mt-5">

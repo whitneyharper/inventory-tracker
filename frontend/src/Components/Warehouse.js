@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import {Container, Form, Row, Col, Button} from 'react-bootstrap';
 import Select from 'react-select';
 import { Formik } from 'formik';
@@ -47,19 +47,19 @@ function Warehouse() {
     })()
 
     const url = "http://localhost:5000/inventory";
+
+    const fetchData = useCallback(async () => {
+        const response = await axios.get(url);
+        setProducts(response.data.products);             
+    }, [])
     
     useEffect(() => {
-        const fetchData =  async() => {
-            const response = await axios.get(url);
-            setProducts(response.data.products); 
-        }
-
             try{
-                fetchData();
+                fetchData()
             } catch(error) {
                 console.log('Error fetching and parsing data', error);
             }
-    }, []);
+    }, [fetchData]);
 
    
     useEffect(() => {
