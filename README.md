@@ -1,12 +1,10 @@
 # Project Title
 
-Inventory Tracking Application for Shopify Backend Developer 2022 Summer Internship Challenge
-
-Requirements and more information about the challenge can be found here [Shopify Backend Challenge](https://docs.google.com/document/d/1z9LZ_kZBUbg-O2MhZVVSqTmvDko5IJWHtuFmIu_Xg1A/edit).
+Inventory Tracking Application 
 
 ## Description
 
-A REST API web service that accepts HTTP requests and returns responses based on the request. Used to manage products in an inventory database with API calls to complete the following:
+A RESTful API web service that accepts HTTP requests and returns responses based on the request. Used to manage products in an inventory database with API calls to complete the following:
 
 * C - Create a new product entry
 * R - View all products in inventory
