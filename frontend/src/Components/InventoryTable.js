@@ -13,14 +13,15 @@ function InventoryTable() {
 
     useEffect(() => {
         const fetchData =  async() => {
+            const response = await axios.get(url);
+            setProducts(response.data.products); 
+        }
+
             try{
-                const response = await axios.get(url);
-                setProducts(response.data.products);                
-            } catch(error){
+                fetchData();
+            } catch(error) {
                 console.log('Error fetching and parsing data', error);
             }
-        }       
-        fetchData();
     }, []);
 
  return(

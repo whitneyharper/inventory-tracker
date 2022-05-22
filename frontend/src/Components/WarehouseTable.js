@@ -12,14 +12,15 @@ function WarehouseTable() {
 
     useEffect(() => {
         const fetchData =  async() => {
-            try{
                 const response = await axios.get(url);
-                setWarehouses(response.data.warehouses);                
-            } catch(error){
-                console.log('Error fetching and parsing data', error);
-            }
-        }       
-        fetchData();
+                setWarehouses(response.data.warehouses);                 
+        }   
+        
+        try{
+            fetchData();
+        } catch(error){
+            console.log('Error fetching and parsing data', error);
+        }
     }, []);
 
     return(
