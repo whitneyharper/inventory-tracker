@@ -33,10 +33,6 @@ function Warehouse() {
         }
     }) : null;
 
-    console.log(inventoryId);
-
-    
-
     let productIds = [];
 
     (async () => {
@@ -49,8 +45,6 @@ function Warehouse() {
             }
         )}
     })()
-
-    console.log(productIds);
 
     const url = "http://localhost:5000/inventory";
     
@@ -143,7 +137,6 @@ function Warehouse() {
                 }) => (
                     <Container>
                             <Form noValidate onSubmit={handleSubmit}>
-                            {console.log(values)}
                                 <Form.Group as={Row} className="mb-3 justify-content-center">
                                     <Form.Label column sm={2} className="redAsterisks">
                                     Name
@@ -207,10 +200,8 @@ function Warehouse() {
                                                         }
                                                     })}                                            
                                             isMulti
-                                            // value={values.inventory}
-                                            // value={values.inventory}
                                             defaultValue={warehouseId[0].inventory.map((i) => {
-                                                return {                                            //      
+                                                return {                                                 
                                                     label: i.name
                                                 }
                                             })}                                            

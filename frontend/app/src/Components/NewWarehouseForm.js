@@ -23,8 +23,6 @@ function WarehouseForm() {
    
     const url = "http://localhost:5000/inventory";
 
-    
-
     useEffect(() => {
         const fetchData =  async() => {
             try{
@@ -87,7 +85,6 @@ function WarehouseForm() {
                 }) => (
                     <Container>
                             <Form noValidate onSubmit={handleSubmit}>
-                            {console.log(values)}
                                 <Form.Group as={Row} className="mb-3 justify-content-center">
                                     <Form.Label column sm={2} className="redAsterisks">
                                     Name
@@ -151,7 +148,6 @@ function WarehouseForm() {
                                                         }
                                                     })}
                                             isMulti
-                                            // value={values.inventory}
                                             name="inventory"
                                             onChange={(option) => {
                                                 setFieldValue("inventory", option.map((o) => {

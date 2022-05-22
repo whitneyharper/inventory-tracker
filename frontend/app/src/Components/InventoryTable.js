@@ -23,16 +23,6 @@ function InventoryTable() {
         fetchData();
     }, [setProducts]);
 
-    // const history = useHistory();
-    // const handleClick = (id) => {
-    //     history.push('/inventory/' + id)
-    // }
-    // const handleDelete = async(productIdToRemove) => {        
-    //         await axios.delete(`http://localhost:5000/inventory/${productIdToRemove}`);
-    //         setProducts((prev) => prev.filter(
-    //             product => product.id !== productIdToRemove))       
-    // }
-
  return(
     <Table striped bordered hover className="mt-5">
         <thead>
@@ -54,9 +44,6 @@ function InventoryTable() {
                         <td>{product.quantity}</td>
                         <td>{product.category}</td>
                         <td><Link to={'/inventory/' + product._id}>View</Link></td>
-                        
-                        {/* <td><Button variant="info" className="text-white">Edit</Button></td>
-                        <td><Button variant="danger" onClick={() => handleDelete(product._id)} type="submit">Delete</Button></td> */}
                     </tr>
                     </tbody>
                 )

@@ -98,7 +98,6 @@ function Product() {
                 }) => (
                     <Container>
                             <Form noValidate onSubmit={handleSubmit}>
-                            {console.log(values)}
                                 <Form.Group as={Row} className="mb-3 justify-content-center">
                                     <Form.Label column sm={2} className="redAsterisks">
                                     Name
