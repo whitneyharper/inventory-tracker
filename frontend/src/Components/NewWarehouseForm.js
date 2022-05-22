@@ -21,7 +21,7 @@ function WarehouseForm() {
 
     const [products, setProducts] = useState([]);
    
-    const url = "http://localhost:5000/inventory";
+    const url = "/inventory";
 
     useEffect(() => {
         const fetchData =  async() => {
@@ -59,7 +59,7 @@ function WarehouseForm() {
                     //POST
                     try {
                         await axios.post(
-                            "http://localhost:5000/warehouse", 
+                            "/warehouse", 
                             values,
                             {
                                 headers: {

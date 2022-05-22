@@ -8,7 +8,7 @@ function WarehouseTable() {
 
     const [warehouses, setWarehouses] = useState([]);
     
-    const url = "http://localhost:5000/warehouse";
+    const url = "/warehouse";
 
     useEffect(() => {
         const fetchData =  async() => {

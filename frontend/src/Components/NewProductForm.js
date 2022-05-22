@@ -40,7 +40,7 @@ function ProductForm() {
                     //POST
                     try {
                         await axios.post(
-                            "http://localhost:5000/inventory", 
+                            "/inventory", 
                             values,
                             {
                                 headers: {

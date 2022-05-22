@@ -46,7 +46,7 @@ function Warehouse() {
         )}
     })()
 
-    const url = "http://localhost:5000/inventory";
+    const url = "/inventory";
 
     const fetchData = useCallback(async () => {
         const response = await axios.get(url)
@@ -65,7 +65,7 @@ function Warehouse() {
     useEffect(() => {
         const fetchData =  async() => {
             try{
-                const response = await axios.get("http://localhost:5000/warehouse");
+                const response = await axios.get("/warehouse");
                 setWarehouses(response.data.warehouses);               
             } catch(error){
                 console.log('Error fetching and parsing data', error);
@@ -76,7 +76,7 @@ function Warehouse() {
 
     const handleDelete = async() => {     
         try {
-            await axios.delete(`http://localhost:5000/warehouse/${id}`);           
+            await axios.delete(`/warehouse/${id}`);           
         } catch(err) {
             console.log('not working', err);
         } finally {
@@ -111,7 +111,7 @@ function Warehouse() {
                     //POST
                     try {
                         await axios.put(
-                            `http://localhost:5000/warehouse/${id}`, 
+                            `/warehouse/${id}`, 
                             values,
                             {
                                 headers: {

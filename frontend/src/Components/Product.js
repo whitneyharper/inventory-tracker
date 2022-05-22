@@ -18,7 +18,7 @@ function Product() {
    
     const [products, setProducts] = useState([]);  
     
-    const url = "http://localhost:5000/inventory";
+    const url = "/inventory";
     
     useEffect(() => {
         const fetchData =  async() => {
@@ -40,7 +40,7 @@ function Product() {
   
     const handleDelete = async() => {     
         try {
-            await axios.delete(`http://localhost:5000/inventory/${id}`);           
+            await axios.delete(`/inventory/${id}`);           
         } catch(err) {
             console.log('not working', err);
         } finally {
@@ -75,7 +75,7 @@ function Product() {
                     //POST
                     try {
                         await axios.put(
-                            `http://localhost:5000/inventory/${id}`, 
+                            `/inventory/${id}`, 
                             values,
                             {
                                 headers: {
