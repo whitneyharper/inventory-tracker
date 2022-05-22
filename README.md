@@ -11,7 +11,7 @@ A RESTful API web service that accepts HTTP requests and returns responses based
 * U - Update a product entry
 * D - Delete a product entry
 
-Additional feature of exporting inventory data into a csv file.
+Additional feature basic CRUD functionality for warehouses, along with assigning inventory to specific warehouse
 
 ## Getting Started
 
@@ -19,33 +19,39 @@ Additional feature of exporting inventory data into a csv file.
 
 * JavaScript
 * Node.js
-* SQLite
-* Sequelize ORM
+* MongoDB database
+* Mongoose ODM
+* Create React App
+
 
 ### Dependencies
 
 * express
-* json2csv
-* sqlite3
-* sequelize
+* cors
+* dotenv
+* mongoose
+* axios
+* bootstrap
+* formik
+* react
+* react-bootstrap
+* react-router-dom
+* react-select
+* yup
 
 ### Before Installing
-* SQLite is required and need to be on local machine.
-* Go to the [SQLite](https://www.sqlite.org/index.html) site.
-* Here is [Guide](https://www.sqlite.org/quickstart.html) for setup.
+* Can use MongoDB to host and manage data in the cloud and not locally. 
+* Here is [Guide](https://www.mongodb.com/docs/atlas/getting-started/?_ga=2.105812355.1012571433.1653063759-826227366.1652645786) for setup.
 * Also Node.js is required.
 * Go to the [Node.js](https://nodejs.org/en/) site.
-* DB Browser for SQLite is a great tool to visually see your tables      without needing to use SQL commands and shell/DOS prompts. It formats your tables into a spreadsheet-like form.
-* I suggest to download this to see the changes made to the database.
-* Go to the [DB Browser for SQLite](https://sqlitebrowser.org/) site to download the tool.
-* Once SQLite and Node.js are installed and setup you can start cloning the repository.
+* Once MongoDB and Node.js are installed you start cloning the repository.
 
 ### Installing
 
 * Clone repository git clone 
 
 ```
-git@github.com:whitneyharper/inventory-tracker.git
+https://github.com/whitneyharper/inventory-tracker.git
 ```
 
 * To install dependencies type [npm install] in the terminal 
@@ -62,22 +68,14 @@ npm install
 npm start
 ```
 
-## Testing the API
-Use POSTMAN to test routes.
+## API Calls
 
-* Go to the [Postman](https://www.postman.com/) site.
-* Create an account or log in.
-* From your account's home screen, create a workspace by clicking on `Workspace` in the top left menu bar, next to `Home`.
-* Upon clicking on `Workspace` you will see a button label `Create Workspace`, click that button.
-![This is an image](/views/images/create-workspace.jpeg)
-* A Create workspace form will appear. Fill out to form and under Visibility select personal. Once the form is complete click the `Create Workspace` button at the bottom of the form.
-![This is an image](/views/images/workspace-form.jpeg)
-* Once you're in a workspace, click on `+` to start a request.
-![This is an image](/views/images/create-request.jpeg)
-* Choose the method needed for your request and input request URL.
-![This is an image](/views/images/select-method.jpeg)
-* Click on `Send` button.
-
+| Type     | URI            | Parameter     | Parameter Type  | Description   |
+| -------- | -------------  | ------------  | --------------- | ------------- | 
+| GET      | /inventory     | NewYork       | John            | Test1         | 
+| POST     | /inventory     | Toronto       | John            | Test1         | 
+| PUT      | /inventory/:id | NewYork       | John            | Test1         | 
+| DELETE   | /inventory/:id | Toronto       | John            | Test1         | 
 
 ### Create a new product
 - API <br> POST/ <localhost:3000/inventory>
@@ -157,20 +155,7 @@ Use POSTMAN to test routes.
     1,"Harry Potter t-shirt",20.99,100,"apparel"
     2,"Gold Hoop earrings",20.99,100,"jewelry"
     3,"Square lens sunglasses",10.99,1,"accessories"
-
-## View Database using DB Browser for SQLite
-
-
-* Launch DB Browser for SQLite
-* Click on `Open Database`.
-![This is an image](/views/images/open-database.jpg)
-* Select inventory.db.
-![This is an image](/views/images/select-database.jpg)
-* To view data in a spreadsheet-like form, click on `Browse Data`. There is a dropbox menu label `Table`. Select Products and the table should appear as a spreadsheet. When you make changes to the data through the API calls just click on the refresh button to see the updated changes.
-![This is an image](/views/images/browse-data.jpg)
-
-    
- 
+   
 ## Authors
 
 Contributors names and contact info
