@@ -18,7 +18,7 @@ function InventoryTable() {
     
     useEffect(() => {
             try{
-                fetchData()
+                fetchData();
             } catch(error) {
                 console.log('Error fetching and parsing data', error);
             }

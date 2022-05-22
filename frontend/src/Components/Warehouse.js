@@ -49,7 +49,7 @@ function Warehouse() {
     const url = "http://localhost:5000/inventory";
 
     const fetchData = useCallback(async () => {
-        const response = await axios.get(url);
+        const response = await axios.get(url)
         setProducts(response.data.products);             
     }, [])
     
