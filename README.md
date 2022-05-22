@@ -70,92 +70,18 @@ npm start
 
 ## API Calls
 
-| Type     | URI            | Parameter     | Parameter Type  | Description   |
-| -------- | -------------  | ------------  | --------------- | ------------- | 
-| GET      | /inventory     | NewYork       | John            | Test1         | 
-| POST     | /inventory     | Toronto       | John            | Test1         | 
-| PUT      | /inventory/:id | NewYork       | John            | Test1         | 
-| DELETE   | /inventory/:id | Toronto       | John            | Test1         | 
+| Type     | URI            | Parameter    | Description                       |
+| -------- | -------------  | ------------ | --------------------------------- | 
+| GET      | /inventory     |              | return all products in db         | 
+| POST     | /inventory     |              | create a new product              |  
+| PUT      | /inventory/:id | product id   | update product by specific id     |  
+| DELETE   | /inventory/:id | product id   | delete product by specific id     | 
+| GET      | /warehouse     |              | return all warehouses in db       | 
+| POST     | /warehouse     |              | create a new warehouse            | 
+| PUT      | /warehouse/:id | warehouse id | update a warehouse by specific id |  
+| DELETE   | /warehouse/:id | warehouse id | delete a warehouse by specific id |  
 
-### Create a new product
-- API <br> POST/ <localhost:3000/inventory>
-
-- **Input** <br> 
-  `{ "name": "Harry Potter t-shirt", "price": 20.99, "quantity": 100, "category": "apparel" }` <br>
   
-- **Expected response** <br>
-    ```
-    {
-        "message": "New product added to inventory",
-        "product": {
-            "id": 1,
-            "name": "Harry Potter t-shirt",
-            "price": 20.99,
-            "quantity": 100,
-            "category": "apparel"
-        }
-    }
-
-### Get list of products in inventory
-- API <br> GET/ <localhost:3000/inventory>
-
-- **Expected response** <br>
-    ```
-    [
-        {
-            "id": 1,
-            "name": "Harry Potter t-shirt",
-            "price": 20.99,
-            "quantity": 100,
-            "category": "apparel"
-        },
-        {
-            "id": ,
-            "name": "Gold Hoop earrings",
-            "price": 10.99,
-            "quantity": 1000,
-            "category": "jewelry"
-        }
-    ]
-    
-### Update a product entry 
-- API <br> PUT/ <localhost:3000/inventory/2>
-
-- **Input** <br> 
-  `{ "quantity": 78 }` <br>
-  
-- **Expected response** <br>
-    ```
-    {
-        "message": "Product is updated.",
-        "updatedProduct": {
-            "id": 1,
-            "name": "Harry Potter t-shirt",
-            "price": 20.99,
-            "quantity": 78,
-            "category": "apparel"
-        }
-    }   
-
-### Delete a product entry
-- API <br> DELETE/ <localhost:3000/inventory/2>
-
-- **Expected response** <br>
-    ```
-    {
-        "message": "Product deleted."
-    }
-
-### Get a csv file of inventory database
-- API <br> GET/ <localhost:3000/inventory/download>
-
-- **Expected response** <br>
-    ```
-    "id","name","price","quantity","category"
-    1,"Harry Potter t-shirt",20.99,100,"apparel"
-    2,"Gold Hoop earrings",20.99,100,"jewelry"
-    3,"Square lens sunglasses",10.99,1,"accessories"
-   
 ## Authors
 
 Contributors names and contact info
