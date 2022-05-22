@@ -21,7 +21,7 @@ function InventoryTable() {
             }
         }       
         fetchData();
-    }, [setProducts]);
+    }, []);
 
  return(
     <Table striped bordered hover className="mt-5">
