@@ -7,7 +7,9 @@ const cors = require("cors");
 //==================================================
 // Middleware
 //==================================================
-app.use(cors());
+app.use(cors({
+  origin: '*'
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -39,6 +41,6 @@ app.use((err, req, res, next) => {
   res.status(status).json(message);
 });
 
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, () => {
     console.log(`The server is up and running. Listening on ${PORT}.`);
 });
