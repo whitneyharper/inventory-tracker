@@ -4,7 +4,7 @@ const app = express();
 // const path = require('path');
 const mongoose = require('mongoose');
 const connectionString = process.env.DATABASE_URL;
-const PORT = 5000;
+const PORT = process.env.PORT || 3001;
 const cors = require("cors");
 
 //==================================================
