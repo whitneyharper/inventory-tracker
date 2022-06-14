@@ -10,8 +10,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "cd frontend && npm i && npm start",
-    "server": "cd backend && npm i && node index.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\" "
+    "dev": "concurrently --kill-others \"heroku local\" \"npm run start --prefix ./frontend\"",
+    "postinstall": "npm install --prefix ./backend && npm install --prefix ./frontend && npm run build --prefix ./frontend"
   },
   
   "repository": {
