@@ -1,11 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import WarehousesPage from './Pages/WarehousesPage';
-import InventoryPage from './Pages/InventoryPage';
+// import InventoryPage from './Pages/InventoryPage';
 import NewProductPage from './Pages/NewProductPage'
 import NewWarehousePage from './Pages/NewWarehousePage';
 import ProductPage from './Pages/ProductPage';
 import WarehousePage from './Pages/WarehousePage';
+import LoginForm from './Components/LoginForm';
 import './App.css';
 
 function App() {
@@ -14,8 +15,11 @@ function App() {
       <Router>
         <Switch>  
         <Route exact path='/'>
-            <InventoryPage />
+            <LoginForm />
           </Route>  
+          {/* <Route exact path='/'>
+            <InventoryPage />
+          </Route> */}
           <Route exact path='/inventory/create'>
             <NewProductPage />
           </Route>
