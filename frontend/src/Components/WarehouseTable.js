@@ -8,7 +8,7 @@ function WarehouseTable() {
 
     const [warehouses, setWarehouses] = useState([]);
     
-    const url = "/warehouse";
+    const url = "/warehouses";
 
     useEffect(() => {
         const fetchData =  async() => {

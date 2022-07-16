@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import {Container, Form, Row, Col, Button} from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 const axios = require('axios').default;
 
 let schema = yup.object().shape({
@@ -13,12 +13,12 @@ let schema = yup.object().shape({
 })
 
 function Product() {
-    const history = useHistory();
+    const navigate = useNavigate();
     let {id} = useParams();
    
     const [products, setProducts] = useState([]);  
     
-    const url = "/inventory";
+    const url = "/inventories";
     
     useEffect(() => {
         const fetchData =  async() => {
@@ -40,11 +40,11 @@ function Product() {
   
     const handleDelete = async() => {     
         try {
-            await axios.delete(`/inventory/${id}`);           
+            await axios.delete(`/inventories/${id}`);           
         } catch(err) {
             console.log('not working', err);
         } finally {
-              history.push('/') ; 
+              navigate('/inventory') ; 
         }            
     }
 
@@ -75,7 +75,7 @@ function Product() {
                     //POST
                     try {
                         await axios.put(
-                            `/inventory/${id}`, 
+                            `/inventories/${id}`, 
                             values,
                             {
                                 headers: {
@@ -86,7 +86,7 @@ function Product() {
                     } catch(err) {
                         } finally {
                             actions.setSubmitting(false);
-                            history.push('/') ;
+                            navigate('/inventory') ;
                         }
                     } }
             >

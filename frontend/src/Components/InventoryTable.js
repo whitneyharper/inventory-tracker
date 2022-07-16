@@ -9,7 +9,7 @@ function InventoryTable() {
     
     const [products, setProducts] = useState([]);      
 
-    const url = "/inventory";
+    const url = "/inventories";
 
     const fetchData = useCallback(async () => {
         const response = await axios.get(url);

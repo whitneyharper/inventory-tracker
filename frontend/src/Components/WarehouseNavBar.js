@@ -10,7 +10,7 @@ function WarehouseNavBar() {
                 <Container>
                     <Navbar.Brand>Inventory Tracking</Navbar.Brand>                    
                     <Nav className="mx-auto">
-                        <Link to='/'>Inventory</Link>                                        
+                        <Link to='/inventory'>Inventory</Link>                                        
                     </Nav>                   
                 </Container>
             </Navbar>                

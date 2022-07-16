@@ -1,42 +1,28 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import WarehousesPage from './Pages/WarehousesPage';
-// import InventoryPage from './Pages/InventoryPage';
+import InventoryPage from './Pages/InventoryPage';
 import NewProductPage from './Pages/NewProductPage'
 import NewWarehousePage from './Pages/NewWarehousePage';
 import ProductPage from './Pages/ProductPage';
 import WarehousePage from './Pages/WarehousePage';
-import LoginForm from './Components/LoginForm';
+import Login from './Pages/LoginPage';
 import './App.css';
 
 function App() {
   return (
     <div className="App">  
-      <Router>
-        <Switch>  
-        <Route exact path='/'>
-            <LoginForm />
-          </Route>  
-          {/* <Route exact path='/'>
-            <InventoryPage />
-          </Route> */}
-          <Route exact path='/inventory/create'>
-            <NewProductPage />
-          </Route>
-        <Route exact path='/inventory/:id'>
-            <ProductPage />
-          </Route>      
-          <Route  exact path='/warehouse'>
-            <WarehousesPage />
-          </Route>  
-          <Route  exact path='/warehouse/create'>
-            <NewWarehousePage />
-          </Route> 
-          <Route  exact path='/warehouse/:id'>
-            <WarehousePage />
-          </Route> 
-        </Switch>        
-      </Router> 
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/inventory" element={<InventoryPage />} />
+          <Route path="/inventory/create" element={<NewProductPage />} />
+          <Route path="/inventory/:id" element={<ProductPage />} />
+          <Route path="/warehouse" element={<WarehousesPage />} />
+          <Route path="/warehouse/create" element={<NewWarehousePage />} />
+          <Route path="/warehouse/:id" element={<WarehousePage/>}/>
+        </Routes>
+      </BrowserRouter>  
     </div>
   );
 }

@@ -3,7 +3,7 @@ import {Container, Form, Row, Col, Button} from 'react-bootstrap';
 import Select from 'react-select';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 const axios = require('axios').default;
 
 let schema = yup.object().shape({
@@ -15,7 +15,7 @@ let schema = yup.object().shape({
 
 function Warehouse() {
     
-    const history = useHistory();
+    const navigate = useNavigate();
     let {id} = useParams();
 
     const [products, setProducts] = useState([]); 
@@ -46,7 +46,7 @@ function Warehouse() {
         )}
     })()
 
-    const url = "/inventory";
+    const url = "/inventories";
 
     const fetchData = useCallback(async () => {
         const response = await axios.get(url)
@@ -65,7 +65,7 @@ function Warehouse() {
     useEffect(() => {
         const fetchData =  async() => {
             try{
-                const response = await axios.get("/warehouse");
+                const response = await axios.get("/warehouses");
                 setWarehouses(response.data.warehouses);               
             } catch(error){
                 console.log('Error fetching and parsing data', error);
@@ -76,11 +76,11 @@ function Warehouse() {
 
     const handleDelete = async() => {     
         try {
-            await axios.delete(`/warehouse/${id}`);           
+            await axios.delete(`/warehouses/${id}`);           
         } catch(err) {
             console.log('not working', err);
         } finally {
-              history.push('/warehouse') ; 
+              navigate('/warehouse') ; 
         }            
     }
 
@@ -111,7 +111,7 @@ function Warehouse() {
                     //POST
                     try {
                         await axios.put(
-                            `/warehouse/${id}`, 
+                            `/warehouses/${id}`, 
                             values,
                             {
                                 headers: {
@@ -122,7 +122,7 @@ function Warehouse() {
                     } catch(err) {
                         } finally {
                             actions.setSubmitting(false);
-                            history.push('/warehouse');
+                            navigate('/warehouse');
                         }
                    
 

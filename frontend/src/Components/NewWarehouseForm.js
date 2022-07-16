@@ -3,7 +3,7 @@ import {Container, Form, Row, Col, Button} from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import Select from 'react-select';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const axios = require('axios').default;
 
 
@@ -17,11 +17,11 @@ let schema = yup.object().shape({
 
 function WarehouseForm() {
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const [products, setProducts] = useState([]);
    
-    const url = "/inventory";
+    const url = "/inventories";
 
     useEffect(() => {
         const fetchData =  async() => {
@@ -59,7 +59,7 @@ function WarehouseForm() {
                     //POST
                     try {
                         await axios.post(
-                            "/warehouse", 
+                            "/warehouses", 
                             values,
                             {
                                 headers: {
@@ -70,7 +70,7 @@ function WarehouseForm() {
                     } catch(err) {
                         } finally {                            
                             actions.setSubmitting(false);
-                            history.push('/warehouse')
+                            navigate('/warehouse')
                         }
                    
 

@@ -2,13 +2,13 @@ import React from 'react';
 import {ButtonGroup, Button, Container, Row, Col} from 'react-bootstrap';
 import WarehouseNavBar from '../Components/WarehouseNavBar';
 import WarehouseTable from '../Components/WarehouseTable';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function WarehousesPage(){
 
-    const history = useHistory();
+    const navigate = useNavigate();
     const handleClick = () => {
-        history.push('/warehouse/create')
+        navigate('/warehouse/create')
     }
 
     return(

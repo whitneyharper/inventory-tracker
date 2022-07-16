@@ -2,14 +2,14 @@ import React from 'react';
 import { ButtonGroup, Button, Container, Col, Row } from 'react-bootstrap';
 import InventoryTable from '../Components/InventoryTable';
 import NavBar from '../Components/NavBar';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 function InventoryPage() {
 
-    const history = useHistory();
+    const navigate = useNavigate();
     const handleClick = () => {
-        history.push('/inventory/create');
+        navigate('/inventory/create');
     }
 
     return(

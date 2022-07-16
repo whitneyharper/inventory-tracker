@@ -2,7 +2,7 @@ import React from 'react';
 import {Container, Form, Row, Col, Button} from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const axios = require('axios').default;
 
 let schema = yup.object().shape({
@@ -14,7 +14,7 @@ let schema = yup.object().shape({
 
 function ProductForm() {
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     return(
         <>
@@ -40,7 +40,7 @@ function ProductForm() {
                     //POST
                     try {
                         await axios.post(
-                            "/inventory", 
+                            "/inventories", 
                             values,
                             {
                                 headers: {
@@ -52,7 +52,7 @@ function ProductForm() {
                         } finally {
                             actions.resetForm();
                             actions.setSubmitting(false);
-                            history.push('/') ;
+                            navigate('/inventory') ;
                         }
                    
 

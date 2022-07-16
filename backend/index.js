@@ -26,9 +26,11 @@ dbSetup();
 //==================================================
 const inventoryRoutes = require('./src/routes/inventoryRoutes');
 const warehouseRoutes = require('./src/routes/warehouseRoutes');
+// const userRoutes = require('./src/routes/useRoutes')
 
-app.use('/inventory', inventoryRoutes);
-app.use('/warehouse', warehouseRoutes);
+app.use('/inventories', inventoryRoutes);
+app.use('/warehouses', warehouseRoutes);
+// app.use(userRoutes);
 
 //==================================================
 // Seeders
