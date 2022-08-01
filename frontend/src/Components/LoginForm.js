@@ -74,6 +74,9 @@ function LoginForm(){
                                     <Button className="btn btn-dark w-100 font-weight-bold mt-2 pb-2">
                                         Log In
                                     </Button>
+                                    <Button className="btn btn-primary w-100 font-weight-bold mt-2 pb-2">
+                                        Sign-up
+                                    </Button>
                                 </Form>  
                             )
                             }
