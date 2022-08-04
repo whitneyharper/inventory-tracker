@@ -30,7 +30,7 @@ const userRoutes = require('./src/routes/useRoutes')
 
 app.use('/inventories', inventoryRoutes);
 app.use('/warehouses', warehouseRoutes);
-app.use('/user', userRoutes);
+app.use('/users', userRoutes);
 
 //==================================================
 // Seeders
