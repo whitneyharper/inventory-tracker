@@ -1,5 +1,6 @@
 import React from 'react';
-import {Container, Row, Col, Image} from 'react-bootstrap';
+import {Container, Row, Col, Image, Button} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import LoginForm from '../Components/LoginForm';
 
 
@@ -15,7 +16,9 @@ function Login(){
                         <Image src='chuttersnap-JWaXthlA9Cc-unsplash.jpg' className="img-fluid"  style={{minHeight: "100%"}}></Image>
                     </Col>
                     <Col xs={12} md={12} lg={6} className="bg-white p-5">
-                        <LoginForm />
+                        <LoginForm text='Log into your Account' title="Login" />
+                        <Button variant="link"><Link to='/signup'>Sign-up</Link></Button>
+                         
                     </Col>
                 </Row>
             </Container>

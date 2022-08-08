@@ -8,7 +8,7 @@ const schema = yup.object().shape({
     password: yup.string().required("Password is required"), 
 });
 
-function LoginForm(){
+function LoginForm(props){
     return(
         <>
             <Container>
@@ -18,7 +18,7 @@ function LoginForm(){
                             Welcome to Inventory Tracker
                         </h6>
                         <h1 className="pb-3 text-start">
-                            Log into your <br></br>Account
+                            {props.text}
                         </h1>
                         <Formik
                             initialValues={{
@@ -40,7 +40,7 @@ function LoginForm(){
                                 errors,          
                             }) => (
                                 <Form className='mb-4' noValidate onSubmit={handleSubmit}>
-                                    <Form.Group as={Row} className="mb-3 pb-3" controlId="formGroupEmail">
+                                    <Form.Group as={Row} className="mb-2 pb-3" controlId="formGroupEmail">
                                         <Form.Label className="text-start">Email address</Form.Label>
                                         <Col sm={12}>
                                             <Form.Control 
@@ -56,7 +56,7 @@ function LoginForm(){
                                         </Col>
                     
                                     </Form.Group>
-                                    <Form.Group as={Row} className="mb-3 pb-3" controlId="formGroupPassword">
+                                    <Form.Group as={Row} className="mb-2 pb-3" controlId="formGroupPassword">
                                         <Form.Label className="text-start">Password</Form.Label>
                                         <Col sm={12}>
                                             <Form.Control 
@@ -71,11 +71,8 @@ function LoginForm(){
                                             <Form.Control.Feedback  type="invalid">{errors.password}</Form.Control.Feedback>
                                         </Col>
                                     </Form.Group>
-                                    <Button className="btn btn-dark w-100 font-weight-bold mt-2 pb-2">
-                                        Log In
-                                    </Button>
-                                    <Button className="btn btn-primary w-100 font-weight-bold mt-2 pb-2">
-                                        Sign-up
+                                    <Button className="btn btn-danger w-100 font-weight-bold mt-2 pb-2">
+                                        {props.title}
                                     </Button>
                                 </Form>  
                             )

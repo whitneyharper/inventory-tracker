@@ -7,6 +7,7 @@ import NewWarehousePage from './Pages/NewWarehousePage';
 import ProductPage from './Pages/ProductPage';
 import WarehousePage from './Pages/WarehousePage';
 import Login from './Pages/LoginPage';
+import SignupForm from './Pages/SignupPage';
 import './App.css';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/signup" element={<SignupForm />} />
           <Route path="/inventory" element={<InventoryPage />} />
           <Route path="/inventory/create" element={<NewProductPage />} />
           <Route path="/inventory/:id" element={<ProductPage />} />
