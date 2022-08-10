@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {Container, Form, Row, Col, Button,} from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { useAuthContext } from '../Hooks/useAuthContext';
 const axios = require('axios').default;
 
 const schema = yup.object().shape({
@@ -11,8 +11,9 @@ const schema = yup.object().shape({
 });
 
 function SignupForm(){
-    const { dispatch } = useAuthContext();
+ 
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     return(
         <>
@@ -46,19 +47,16 @@ function SignupForm(){
                                         }
                                         )
 
-                                    if(response){
-                                        localStorage.setItem('user', response.data);
-
-                                        dispatch({type: 'LOGIN', payload: response.data});
-                                    }
-
+                                        if(response){
+                                            actions.resetForm();
+                                            actions.setSubmitting(false);
+                                            navigate('/') ;
+                                        }
+                                        
+                                   
                                 } catch(err) {
                                     setError(err.response.data.message);
-                                    } finally {
-                                        actions.resetForm();
-                                        actions.setSubmitting(false);
-                                        // navigate('/inventory') ;
-                                    }
+                                    } 
                                 }}
                             >
                              {({
@@ -118,3 +116,4 @@ function SignupForm(){
 }
 
 export default SignupForm;
+

@@ -32,7 +32,9 @@ exports.loginUser = asyncHandler(async(req, res) => {
     //CREATE A TOKEN
     const token = createToken(user._id);
 
-    return res.status(200).json({user, token})
+    const email = user.email;
+
+    return res.status(200).json({email , token});
 });
 
 //SIGNUP USER

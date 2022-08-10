@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Container, Form, Row, Col, Button,} from 'react-bootstrap';
 import { Formik } from 'formik';
+import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
-// import { useAuthContext } from '../Hooks/useAuthContext';
-// const axios = require('axios').default;
+import { useAuthContext } from '../Hooks/useAuthContext';
+const axios = require('axios').default;
 
 const schema = yup.object().shape({
     email: yup.string().email().required("Email is required"),
@@ -11,6 +12,11 @@ const schema = yup.object().shape({
 });
 
 function LoginForm(){
+
+    const { dispatch } = useAuthContext();
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
+    
 
     return(
         <>
@@ -29,11 +35,32 @@ function LoginForm(){
                                 password: "",
                             }}
                             validationSchema={schema}
-                            onSubmit={(values, { setSubmitting }) => {
-                                setTimeout(() => {
-                                    alert(JSON.stringify(values, null, 2));
-                                    setSubmitting(false);
-                                    }, 500);
+                            onSubmit={async(values, actions) => {
+                                actions.setSubmitting(true);
+
+                                //POST
+                                try {
+                                    const response = await axios.post(
+                                        "/users/login", 
+                                        values,
+                                        {
+                                            headers: {
+                                                "Content-Type": "application/json",
+                                            },
+                                        }
+                                        )
+
+                                    if(response){
+                                        localStorage.setItem('user', JSON.stringify(response.data));
+                                        dispatch({type: 'LOGIN', payload: response.data});
+                                        actions.resetForm();
+                                        actions.setSubmitting(false);
+                                        navigate('/inventory') ;
+                                    }
+
+                                } catch(err) {
+                                    setError(err.response.data.message);
+                                    } 
                                 }}
                             >
                              {({
@@ -80,6 +107,7 @@ function LoginForm(){
                                     <Button className="btn btn-danger w-100 font-weight-bold mt-2 pb-2" type="submit">
                                         Login
                                     </Button>
+                                    {error && <div className="error">{error}</div>}
                                 </Form>  
                             )
                             }
