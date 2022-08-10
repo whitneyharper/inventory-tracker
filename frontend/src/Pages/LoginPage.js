@@ -16,7 +16,7 @@ function Login(){
                         <Image src='chuttersnap-JWaXthlA9Cc-unsplash.jpg' className="img-fluid"  style={{minHeight: "100%"}}></Image>
                     </Col>
                     <Col xs={12} md={12} lg={6} className="bg-white p-5">
-                        <LoginForm text='Log into your Account' title="Login" />
+                        <LoginForm />
                         <Button variant="link"><Link to='/signup'>Sign-up</Link></Button>
                          
                     </Col>

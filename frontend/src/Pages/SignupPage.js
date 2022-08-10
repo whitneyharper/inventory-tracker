@@ -1,6 +1,7 @@
 import React from 'react';
-import {Container, Col} from 'react-bootstrap';
-import LoginForm from '../Components/LoginForm';
+import {Container, Col, Button} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import SignupForm from '../Components/SignupForm';
 
 
 function Signup(){
@@ -8,7 +9,8 @@ function Signup(){
         <>
             <Container>
                     <Col xs={12} md={8} lg={6} className="bg-white m-5 p-5 mx-auto border shadow-lg ">
-                        <LoginForm text='Create an Account' title="Sign-up"/>
+                        <SignupForm/>
+                        <Button variant="link"><Link to='/'>Home</Link></Button>
                     </Col>
             </Container>
         </>

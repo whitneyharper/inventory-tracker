@@ -12,20 +12,22 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">  
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/signup" element={<SignupForm />} />
-          <Route path="/inventory" element={<InventoryPage />} />
-          <Route path="/inventory/create" element={<NewProductPage />} />
-          <Route path="/inventory/:id" element={<ProductPage />} />
-          <Route path="/warehouse" element={<WarehousesPage />} />
-          <Route path="/warehouse/create" element={<NewWarehousePage />} />
-          <Route path="/warehouse/:id" element={<WarehousePage/>}/>
-        </Routes>
-      </BrowserRouter>  
-    </div>
+   
+      <div className="App">  
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/signup" element={<SignupForm />} />
+            <Route path="/inventory" element={<InventoryPage />} />
+            <Route path="/inventory/create" element={<NewProductPage />} />
+            <Route path="/inventory/:id" element={<ProductPage />} />
+            <Route path="/warehouse" element={<WarehousesPage />} />
+            <Route path="/warehouse/create" element={<NewWarehousePage />} />
+            <Route path="/warehouse/:id" element={<WarehousePage/>}/>
+          </Routes>
+        </BrowserRouter>  
+      </div>
+
   );
 }
 

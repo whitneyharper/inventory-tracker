@@ -13,7 +13,7 @@ function InventoryTable() {
 
     const fetchData = useCallback(async () => {
         const response = await axios.get(url);
-        setProducts(response.data.products);             
+        setProducts(response.data.products);   
     }, [])
     
     useEffect(() => {

@@ -1,16 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Container, Form, Row, Col, Button,} from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-// import { useAuthContext } from '../Hooks/useAuthContext';
-// const axios = require('axios').default;
+import { useAuthContext } from '../Hooks/useAuthContext';
+const axios = require('axios').default;
 
 const schema = yup.object().shape({
     email: yup.string().email().required("Email is required"),
     password: yup.string().required("Password is required"), 
 });
 
-function LoginForm(){
+function SignupForm(){
+    const { dispatch } = useAuthContext();
+    const [error, setError] = useState(null);
 
     return(
         <>
@@ -21,7 +23,7 @@ function LoginForm(){
                             Welcome to Inventory Tracker
                         </h6>
                         <h1 className="pb-3 text-start">
-                            Log into your Account
+                            Create an Account
                         </h1>
                         <Formik
                             initialValues={{
@@ -29,11 +31,34 @@ function LoginForm(){
                                 password: "",
                             }}
                             validationSchema={schema}
-                            onSubmit={(values, { setSubmitting }) => {
-                                setTimeout(() => {
-                                    alert(JSON.stringify(values, null, 2));
-                                    setSubmitting(false);
-                                    }, 500);
+                            onSubmit={async(values, actions) => {
+                                actions.setSubmitting(true);
+
+                                //POST
+                                try {
+                                    const response = await axios.post(
+                                        "/users/signup", 
+                                        values,
+                                        {
+                                            headers: {
+                                                "Content-Type": "application/json",
+                                            },
+                                        }
+                                        )
+
+                                    if(response){
+                                        localStorage.setItem('user', response.data);
+
+                                        dispatch({type: 'LOGIN', payload: response.data});
+                                    }
+
+                                } catch(err) {
+                                    setError(err.response.data.message);
+                                    } finally {
+                                        actions.resetForm();
+                                        actions.setSubmitting(false);
+                                        // navigate('/inventory') ;
+                                    }
                                 }}
                             >
                              {({
@@ -78,8 +103,9 @@ function LoginForm(){
                                         </Col>
                                     </Form.Group>
                                     <Button className="btn btn-danger w-100 font-weight-bold mt-2 pb-2" type="submit">
-                                        Login
+                                        Sign-up
                                     </Button>
+                                    {error && <div className="error">{error}</div>}
                                 </Form>  
                             )
                             }
@@ -91,4 +117,4 @@ function LoginForm(){
     );
 }
 
-export default LoginForm;
+export default SignupForm;
