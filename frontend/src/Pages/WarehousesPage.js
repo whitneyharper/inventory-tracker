@@ -1,6 +1,6 @@
 import React from 'react';
 import {ButtonGroup, Button, Container, Row, Col} from 'react-bootstrap';
-import WarehouseNavBar from '../Components/WarehouseNavBar';
+import NavBar from '../Components/NavBar';
 import WarehouseTable from '../Components/WarehouseTable';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ function WarehousesPage(){
 
     return(
         <>
-            <WarehouseNavBar />
+            <NavBar inventoryLink={true}/>
             <Container>
                 <Row>
                     <Col>

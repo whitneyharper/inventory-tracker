@@ -5,7 +5,7 @@ import NavBar from '../Components/NavBar';
 import { useNavigate } from 'react-router-dom';
 
 
-function InventoryPage() {
+function InventoryPage(props) {
 
     const navigate = useNavigate();
     const handleClick = () => {
@@ -14,7 +14,7 @@ function InventoryPage() {
 
     return(
         <>               
-            <NavBar />
+            <NavBar warehouseLink={true}/>
             <Container>
                 <Row>
                     <Col>

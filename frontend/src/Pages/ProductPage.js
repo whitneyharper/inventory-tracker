@@ -1,11 +1,11 @@
 import React from "react";
-import WarehouseNavBar from '../Components/WarehouseNavBar';
+import NavBar from "../Components/NavBar";
 import Product from "../Components/Product";
 
 function ProductPage() {
     return(
         <>
-            <WarehouseNavBar />
+            <NavBar inventoryLink={true}/> 
             <Product />
         </>
         

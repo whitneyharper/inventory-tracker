@@ -6,7 +6,7 @@ import Warehouse from "../Components/Warehouse";
 function WarehousePage() {
     return(
         <>
-            <NavBar />
+            <NavBar warehouseLink={true}/>
             <Warehouse />
         </>
     )

@@ -5,11 +5,13 @@ import {useLogout} from '../Hooks/useLogout';
 import { useNavigate } from 'react-router-dom';
 
 
-function NavBar() {
+function NavBar(props) {
     
     const {logout} = useLogout();
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
+    const [warehouseLink, setWarehouseLink] = useState(props.warehouseLink);
+    const [inventoryLink, setInventoryLink] = useState(props.inventoryLink);
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'))
@@ -17,8 +19,15 @@ function NavBar() {
         if(user){
             setUser(user.email);
         }
-    },[user])
+    },[user]);
+
+    useEffect(() => {
+        setWarehouseLink(props.warehouseLink);
+    }, [props.warehouseLink]);
     
+    useEffect(() => {
+        setInventoryLink(props.inventoryLink);
+    },[props.inventoryLink]);
 
     const handleClick = () => {
         logout();
@@ -36,8 +45,9 @@ function NavBar() {
                         Signed in as: {user}
                     </Navbar.Text>
                         <Nav className="mx-auto">
-                            <Link to='/warehouse'>Warehouse</Link>                                  
-                        </Nav> 
+                        {warehouseLink && <Nav.Link><Link to='/warehouse'>Warehouse</Link> </Nav.Link>}
+                        {inventoryLink && <Nav.Link><Link to='/inventory'>Inventory</Link> </Nav.Link>}                                  
+                        </Nav>  
                         <Button onClick={handleClick}>Logout</Button> 
                     </Navbar.Collapse>                             
                 </Container>

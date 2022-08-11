@@ -5,7 +5,7 @@ import NavBar from "../Components/NavBar";
 function NewWarehousePage() {
     return(
         <>
-            <NavBar />
+            <NavBar warehouseLink={true}/>
             <NewWarehouseForm />
         </>
         
