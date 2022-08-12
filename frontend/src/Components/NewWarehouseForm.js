@@ -4,6 +4,7 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import Select from 'react-select';
 import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../Hooks/useAuthContext';
 const axios = require('axios').default;
 
 
@@ -17,23 +18,38 @@ let schema = yup.object().shape({
 
 function WarehouseForm() {
 
+    const { user } = useAuthContext();
     const navigate = useNavigate();
 
     const [products, setProducts] = useState([]);
+    const [error, setError] = useState(null); 
    
     const url = "/inventories";
 
     useEffect(() => {
         const fetchData =  async() => {
             try{
-                const response = await axios.get(url);
-                setProducts(response.data.products);                
+                const response = await axios.get(url, {
+                    headers: {
+                        "Authorization" : `Bearer ${user.token}`
+                    }
+                });
+
+                if (response){
+                    setProducts(response.data.products);
+                }
+                                
             } catch(error){
                 console.log('Error fetching and parsing data', error);
+                setError(error.response.data.message);
             }
-        }       
-        fetchData();
-    }, [setProducts]);
+        }   
+        
+        if(user) {
+            fetchData();
+        }
+        
+    }, [setProducts, user]);
 
     return(
         <>
@@ -54,26 +70,35 @@ function WarehouseForm() {
                 }}
                 validationSchema={schema}
                 onSubmit={async(values, actions) => {
-                    actions.setSubmitting(true);
 
                     //POST
                     try {
-                        await axios.post(
+                        if (!user){
+                            setError("You must be logged in");
+                            return;
+                        }
+
+                        actions.setSubmitting(true);
+
+                        const response = await axios.post(
                             "/warehouses", 
                             values,
                             {
                                 headers: {
                                     "Content-Type": "application/json",
+                                    "Authorization" : `Bearer ${user.token}`
                                 },
                             }
                             )
-                    } catch(err) {
-                        } finally {                            
-                            actions.setSubmitting(false);
-                            navigate('/warehouse')
-                        }
-                   
 
+                            if(response){
+                                actions.setSubmitting(false);
+                                navigate('/warehouse');
+                            }
+                            
+                    } catch(err) {
+                        setError(err.response.data.message);
+                        } 
                     } }
             >
                 {({
@@ -161,6 +186,7 @@ function WarehouseForm() {
                                 <Row className='mt-5'>
                                     <Col>
                                         <Button type="submit">Submit</Button>
+                                        {error && <div className="error">{error}</div>}
                                     </Col>
                                 </Row>
                         </Form>   

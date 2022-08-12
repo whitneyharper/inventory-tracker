@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Container, Form, Row, Col, Button,} from 'react-bootstrap';
 import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { useAuthContext } from '../Hooks/useAuthContext';
+import {useLogout} from '../Hooks/useLogout';
+
 const axios = require('axios').default;
 
 const schema = yup.object().shape({
@@ -16,6 +18,13 @@ function LoginForm(){
     const { dispatch } = useAuthContext();
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const {logout} = useLogout();
+
+    useEffect(() => {
+        logout();
+        
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     
 
     return(

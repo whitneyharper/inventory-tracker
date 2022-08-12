@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { viewInventory, createProduct, updateProduct, deleteProduct} = require('../controllers/inventoryControllers');
+const { requireAuth } = require('../middleware/requireAuth');
+
+router.use(requireAuth);
 
 //POST ROUTE TO CREATE NEW INVENTORY ITEM
 router.post('/', createProduct);

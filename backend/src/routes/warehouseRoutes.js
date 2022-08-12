@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { createWarehouse, viewWarehouse, updateWarehouse, deleteWarehouse } = require('../controllers/warehouseControllers');
+const { requireAuth } = require('../middleware/requireAuth');
+
+router.use(requireAuth);
 
 //POST ROUTE TO CREATE NEW WAREHOUSE
 router.post('/', createWarehouse);

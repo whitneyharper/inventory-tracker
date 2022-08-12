@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Container, Form, Row, Col, Button} from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../Hooks/useAuthContext';
 const axios = require('axios').default;
 
 let schema = yup.object().shape({
@@ -15,6 +16,8 @@ let schema = yup.object().shape({
 function ProductForm() {
 
     const navigate = useNavigate();
+    const { user } = useAuthContext();
+    const [error, setError] = useState(null); 
 
     return(
         <>
@@ -35,27 +38,37 @@ function ProductForm() {
                 }}
                 validationSchema={schema}
                 onSubmit={async(values, actions) => {
-                    actions.setSubmitting(true);
-
+        
                     //POST
                     try {
-                        await axios.post(
+
+                        if (!user){
+                            setError("You must be logged in");
+                            return;
+                        }
+
+                        actions.setSubmitting(true);
+
+                        const response = await axios.post(
                             "/inventories", 
                             values,
                             {
                                 headers: {
                                     "Content-Type": "application/json",
+                                    "Authorization" : `Bearer ${user.token}`
                                 },
                             }
                             )
+                            if (response){
+                                actions.resetForm();
+                                actions.setSubmitting(false);
+                                navigate('/inventory') ;
+                            }
+                            
                     } catch(err) {
-                        } finally {
-                            actions.resetForm();
-                            actions.setSubmitting(false);
-                            navigate('/inventory') ;
-                        }
-                   
-
+                        console.log(err)
+                        setError(err.response.data.message);
+                        } 
                     } }
             >
                 {({
@@ -154,6 +167,7 @@ function ProductForm() {
                                 <Row className='mt-5'>
                                     <Col>
                                         <Button type="submit">Submit</Button>
+                                        {error && <div className="error">{error}</div>}
                                     </Col>
                                 </Row>
                         </Form>   

@@ -1,9 +1,10 @@
-import React, {useState, useEffect, useCallback} from "react";
+import React, {useState, useEffect} from "react";
 import {Container, Form, Row, Col, Button} from 'react-bootstrap';
 import Select from 'react-select';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../Hooks/useAuthContext';
 const axios = require('axios').default;
 
 let schema = yup.object().shape({
@@ -15,11 +16,66 @@ let schema = yup.object().shape({
 
 function Warehouse() {
     
+    const { user } = useAuthContext();
     const navigate = useNavigate();
     let {id} = useParams();
 
     const [products, setProducts] = useState([]); 
     const [warehouses, setWarehouses] = useState([]);
+    const [error, setError] = useState(null); 
+
+    const url = "/inventories";
+
+
+    useEffect(() => {
+        const fetchData = async() => {
+            try{
+                const response = await axios.get(url, {
+                    headers: {
+                        "Authorization" : `Bearer ${user.token}`
+                    }
+                })
+
+                if(response){
+                    setProducts(response.data.products);
+                }
+                 
+            } catch(error) {
+                console.log('Error fetching and parsing data', error);
+                setError(error.response.data.message);
+            }
+        }
+            
+            if(user){
+                fetchData();
+            } 
+    }, [user]);
+
+   
+    useEffect(() => {
+        const fetchData =  async() => {
+            try{
+                const response = await axios.get("/warehouses", {
+                    headers: {
+                        "Authorization" : `Bearer ${user.token}`
+                    }
+                });
+
+                if(response){
+                    setWarehouses(response.data.warehouses); 
+                }
+                              
+            } catch(error){
+                console.log('Error fetching and parsing data', error);
+                setError(error.response.data.message);
+            }
+        }       
+
+        if(user){
+            fetchData();
+        } 
+        
+    }, [user]);
 
     //variable that hold the id in products state that matches the id of useParams
     const warehouseId = warehouses.filter((warehouse) => {
@@ -32,6 +88,7 @@ function Warehouse() {
             label: i.name            
         }
     }) : null;
+
 
     let productIds = [];
 
@@ -46,41 +103,31 @@ function Warehouse() {
         )}
     })()
 
-    const url = "/inventories";
-
-    const fetchData = useCallback(async () => {
-        const response = await axios.get(url)
-        setProducts(response.data.products);             
-    }, [])
-    
-    useEffect(() => {
-            try{
-                fetchData()
-            } catch(error) {
-                console.log('Error fetching and parsing data', error);
-            }
-    }, [fetchData]);
-
    
-    useEffect(() => {
-        const fetchData =  async() => {
-            try{
-                const response = await axios.get("/warehouses");
-                setWarehouses(response.data.warehouses);               
-            } catch(error){
-                console.log('Error fetching and parsing data', error);
-            }
-        }       
-        fetchData();
-    }, []);
+
+ 
+    
+    
 
     const handleDelete = async() => {     
         try {
-            await axios.delete(`/warehouses/${id}`);           
+            if (!user){
+                setError("You must be logged in");
+                return;
+            } 
+            
+            const response = await axios.delete(`/warehouses/${id}`, {
+                headers: {
+                    "Authorization" : `Bearer ${user.token}`
+                }
+            });   
+            
+            if(response){
+                navigate('/warehouse') ; 
+            }
         } catch(err) {
             console.log('not working', err);
-        } finally {
-              navigate('/warehouse') ; 
+            setError(err.response.data.message);
         }            
     }
 
@@ -106,24 +153,35 @@ function Warehouse() {
                 
                 validationSchema={schema}
                 onSubmit={async(values, actions) => {
-                    actions.setSubmitting(true);
-
+                    
                     //POST
                     try {
-                        await axios.put(
+
+                        if (!user) {
+                            setError("You must be logged in");
+                            return;
+                        }
+                        
+                        actions.setSubmitting(true);
+
+                        const response = await axios.put(
                             `/warehouses/${id}`, 
                             values,
                             {
                                 headers: {
                                     "Content-Type": "application/json",
+                                    "Authorization" : `Bearer ${user.token}`
                                 },
                             }
                             )
+
+                            if (response){
+                                actions.setSubmitting(false);
+                                navigate('/warehouse');
+                            }
                     } catch(err) {
-                        } finally {
-                            actions.setSubmitting(false);
-                            navigate('/warehouse');
-                        }
+                        setError(err.response.data.message);
+                        } 
                    
 
                     } }
@@ -222,6 +280,7 @@ function Warehouse() {
                                     <Col xs={6}>
                                         <Button variant="danger" onClick={handleDelete} type="button" >Delete</Button>
                                     </Col>
+                                    {error && <div className="error">{error}</div>}
                                 </Row>
                         </Form>   
                     </Container>

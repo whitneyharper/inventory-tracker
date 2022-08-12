@@ -3,6 +3,7 @@ import {Container, Form, Row, Col, Button} from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../Hooks/useAuthContext';
 const axios = require('axios').default;
 
 let schema = yup.object().shape({
@@ -13,39 +14,67 @@ let schema = yup.object().shape({
 })
 
 function Product() {
+    const { user } = useAuthContext();
     const navigate = useNavigate();
     let {id} = useParams();
    
-    const [products, setProducts] = useState([]);  
+    const [products, setProducts] = useState([]);
+    const [error, setError] = useState(null);   
     
     const url = "/inventories";
     
     useEffect(() => {
         const fetchData =  async() => {
             try{
-                const response = await axios.get(url);
-                setProducts(response.data.products);                
+                const response = await axios.get(url, {
+                    headers: {
+                        "Authorization" : `Bearer ${user.token}`
+                    }
+                });
+
+                if (response){
+                    setProducts(response.data.products);
+                }
+                                
             } catch(error){
                 console.log('Error fetching and parsing data', error);
+                setError(error.response.data.message);
             }
         }  
 
-      fetchData();
-    }, [setProducts]);
+        if (user){
+            fetchData();
+        } else {
+            setError("You must be logged in");
+        }
+
+    }, [setProducts, user]);
 
     //variable that hold the id in products state that matches the id of useParams
     const productId = products.filter((product) => {
         return product._id === id;
     });
   
-    const handleDelete = async() => {     
+    const handleDelete = async() => {    
+         
         try {
-            await axios.delete(`/inventories/${id}`);           
+            if (!user){
+                setError("You must be logged in");
+                return;
+            } 
+            
+            const response = await axios.delete(`/inventories/${id}`, {
+                headers: {
+                    "Authorization" : `Bearer ${user.token}`
+                }
+            });      
+            
+            if(response){
+                navigate('/inventory') ;
+            }
         } catch(err) {
-            console.log('not working', err);
-        } finally {
-              navigate('/inventory') ; 
-        }            
+            setError(err.response.data.message);
+        }           
     }
 
 
@@ -70,24 +99,34 @@ function Product() {
                 }}
                 validationSchema={schema}
                 onSubmit={async(values, actions) => {
-                    actions.setSubmitting(true);
-
+                
                     //POST
                     try {
-                        await axios.put(
+                        if (!user){
+                            setError("You must be logged in");
+                            return;
+                        }
+
+                        actions.setSubmitting(true);
+
+                        const response = await axios.put(
                             `/inventories/${id}`, 
                             values,
                             {
                                 headers: {
                                     "Content-Type": "application/json",
+                                    "Authorization" : `Bearer ${user.token}`
                                 },
                             }
                             )
+
+                            if(response){
+                                actions.setSubmitting(false);
+                                navigate('/inventory') ;
+                            }
                     } catch(err) {
-                        } finally {
-                            actions.setSubmitting(false);
-                            navigate('/inventory') ;
-                        }
+                        setError(err.response.data.message);
+                        } 
                     } }
             >
                 {({
@@ -190,6 +229,7 @@ function Product() {
                                     <Col xs={6}>
                                         <Button variant="danger" onClick={handleDelete} type="button" >Delete</Button>
                                     </Col>
+                                    {error && <div className="error">{error}</div>}
                                 </Row>
                         </Form>   
                     </Container>

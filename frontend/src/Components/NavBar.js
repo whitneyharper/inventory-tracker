@@ -29,6 +29,7 @@ function NavBar(props) {
         setInventoryLink(props.inventoryLink);
     },[props.inventoryLink]);
 
+
     const handleClick = () => {
         logout();
         navigate('/') ;
@@ -45,8 +46,8 @@ function NavBar(props) {
                         Signed in as: {user}
                     </Navbar.Text>
                         <Nav className="mx-auto">
-                        {warehouseLink && <Nav.Link><Link to='/warehouse'>Warehouse</Link> </Nav.Link>}
-                        {inventoryLink && <Nav.Link><Link to='/inventory'>Inventory</Link> </Nav.Link>}                                  
+                        {warehouseLink && <Link to='/warehouse'>Warehouse</Link>}
+                        {inventoryLink && <Link to='/inventory'>Inventory</Link>}                                  
                         </Nav>  
                         <Button onClick={handleClick}>Logout</Button> 
                     </Navbar.Collapse>                             
