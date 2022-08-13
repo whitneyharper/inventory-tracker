@@ -14,7 +14,7 @@ import './App.css';
 function App() {
 
   const { user } = useAuthContext();
-
+  
   return (
       <div className="App">  
         <BrowserRouter>

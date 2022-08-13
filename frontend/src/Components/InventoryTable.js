@@ -41,6 +41,7 @@ function InventoryTable() {
 
     }, [user]);
 
+
  return(
     <>
         <Table striped bordered hover className="mt-5">

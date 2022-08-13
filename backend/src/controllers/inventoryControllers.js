@@ -14,11 +14,13 @@ const asyncHandler = (cb) => {
 
 //CREATE INVENTORY ITEM
 exports.createProduct = asyncHandler(async(req, res) => {
+    const userId = req.user._id;
     const product = await Product.create({
     name: req.body.name,
     price: req.body.price,
     quantity: req.body.quantity,
     category: req.body.category,
+    user_id: userId
 });
 
 return res.status(200).json({message: 'New product added to inventory', product});
@@ -26,7 +28,8 @@ return res.status(200).json({message: 'New product added to inventory', product}
 
 //VIEW ALL INVENTORY ITEMS
 exports.viewInventory = asyncHandler(async(req, res) => {
-    const products = await Product.find({});
+    const userId = req.user._id;
+    const products = await Product.find({ user_id: userId });
     return res.status(200).json({products});
 });
 

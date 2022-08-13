@@ -35,8 +35,8 @@ app.use('/users', userRoutes);
 //==================================================
 // Seeders
 //==================================================
-const { importData } = require("./src/seeders/dataSeeder");
-console.log(importData());
+// const { importData } = require("./src/seeders/dataSeeder");
+// console.log(importData());
 
 //error handler utility
 app.use((err, req, res, next) => {

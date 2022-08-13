@@ -14,21 +14,27 @@ const asyncHandler = (cb) => {
 
 //CREATE WAREHOUSE ENTRY
 exports.createWarehouse = asyncHandler(async(req, res) => {
-    const warehouse = await Warehouse.create(req.body);       
+    const userId = req.user._id;
+    const warehouse = await Warehouse.create({ 
+        name: req.body.name,
+        city: req.body.city,
+        state: req.body.state,
+        user_id: userId 
+        });       
     return res.status(200).json({message: 'New warehouse created', warehouse});
 });
 
 //VIEW ALL WAREHOUSES
 exports.viewWarehouse = asyncHandler(async(req, res) => {
-    const warehouses = await Warehouse.find({}).populate("inventory");
+    const userId = req.user._id;
+    const warehouses = await Warehouse.find({ user_id: userId }).populate("inventory");
     return res.status(200).json({warehouses});
 });
 
 //UPDATE WAREHOUSE BY ID
 exports.updateWarehouse = asyncHandler(async(req, res) => {
     let query = req.params._id;
-    // const warehouse = await Warehouse.findOne({ _id: req.params._id })
-
+   
     const updatedWarehouse = await Warehouse.findByIdAndUpdate(query, req.body);   
 
     if (!updatedWarehouse) {

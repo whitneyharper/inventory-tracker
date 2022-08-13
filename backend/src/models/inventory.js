@@ -20,6 +20,11 @@ const ProductSchema = new Schema({
         enum: ["grocery", "health", "personal care", "beauty", "office", "sports", "pets", "household", "electronics", "baby", "toys", "patio & garden", "home improvement", "auto", "crafts", "entertainment", "apparel", "furniture"]
     }
     ,
+    user_id: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "User"
+    },
     warehouse: { 
         type: Schema.Types.ObjectId, 
         ref: "Warehouse"},
