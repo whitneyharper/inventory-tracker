@@ -32,12 +32,6 @@ app.use('/inventories', inventoryRoutes);
 app.use('/warehouses', warehouseRoutes);
 app.use('/users', userRoutes);
 
-//==================================================
-// Seeders
-//==================================================
-// const { importData } = require("./src/seeders/dataSeeder");
-// console.log(importData());
-
 //error handler utility
 app.use((err, req, res, next) => {
   const { status = 500, message = "Sorry, something went wrong" } = err;
