@@ -51,7 +51,7 @@ function InventoryTable() {
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Category</th>
-                
+                <th></th>
             </tr>
             </thead>
             

@@ -54,6 +54,7 @@ function Product() {
     const productId = products.filter((product) => {
         return product._id === id;
     });
+
   
     const handleDelete = async() => {    
          
@@ -223,11 +224,9 @@ function Product() {
                                     </Col>
                                 </Form.Group>
                                 <Row className='mt-5'>
-                                    <Col xs={6}>
-                                        <Button type="submit">Submit</Button>
-                                    </Col>
-                                    <Col xs={6}>
-                                        <Button variant="danger" onClick={handleDelete} type="button" >Delete</Button>
+                                    <Col xs={12} className="mx-auto">
+                                        <Button type="submit" className="mx-4">Save</Button>
+                                        <Button variant="danger" onClick={handleDelete} type="button" className="mx-4">Delete</Button>
                                     </Col>
                                     {error && <div className="error">{error}</div>}
                                 </Row>
